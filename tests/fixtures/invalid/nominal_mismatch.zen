@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0001
+struct A { n: Int; } struct B { n: Int; } fn main() -> Unit { let b: B = A { n: 1 }; }

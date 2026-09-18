@@ -1,0 +1,29 @@
+// Header مرحبا 😀
+import a.B; // import
+
+// Description
+struct S{/* before */a:Int; // field
+// next
+b:String;
+// dangling
+}
+fn f()->Unit{let a=[1,
+
+// middle
+2,3 // end
+];let b=S{a:1,/* between */b:"😀",// final field
+};let x=call(1,// first
+// second
+2,
+// closing
+); // seconds
+
+// intentionally grouped
+return;
+}
+/* EOF */
+fn more()->Unit{match value{/* leading arm */.a=>call(1,/* before comma */2); // trailing arm
+.b=>{/* inside */return;};};let x=(/* open */1+2/* close */);let y=[/* empty */];let z=S{/* empty fields */};}
+fn first()->Unit{} // trailing definition
+// leading next
+fn second()->Unit{}

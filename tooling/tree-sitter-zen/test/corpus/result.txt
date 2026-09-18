@@ -1,0 +1,34 @@
+===
+result
+===
+enum Error { failed; } fn f() -> Result<Int, Error> { return .ok(1); }
+
+---
+
+(source_file
+  (enum_declaration
+    (type_identifier
+      (identifier))
+    (enum_body
+      (enum_variant
+        (identifier))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier))
+      (type_arguments
+        (named_type
+          (type_identifier
+            (identifier)))
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (block
+      (return_statement
+        (call_expression
+          (enum_constructor_expression
+            (identifier))
+          (arguments
+            (integer_literal)))))))

@@ -1,0 +1,34 @@
+===
+empty_list
+===
+struct User { name: String; } fn main() -> Unit { let values: List<User> = []; }
+
+---
+
+(source_file
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (struct_body
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))
+          (type_arguments
+            (named_type
+              (type_identifier
+                (identifier)))))
+        (list_expression)))))

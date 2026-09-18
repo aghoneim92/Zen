@@ -1,0 +1,1 @@
+interface Named { fn name(self) -> String; } struct User { text: String; } impl Named for User { fn name(self) -> String { return self.text; } } fn render<T: Named>(value: T) -> String { return value.name(); } fn main() -> Unit { let s = render(User { text: "Zen" }); }

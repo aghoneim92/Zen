@@ -1,0 +1,67 @@
+===
+recursive_equality
+===
+enum Tree { leaf(Int); branch(List<Tree>); } enum Chain { end; next(Int, Option<Chain>); } fn eq(a: Chain, b: Chain) -> Bool { return a == b; }
+
+---
+
+(source_file
+  (enum_declaration
+    (type_identifier
+      (identifier))
+    (enum_body
+      (enum_variant
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))
+      (enum_variant
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))
+          (type_arguments
+            (named_type
+              (type_identifier
+                (identifier))))))))
+  (enum_declaration
+    (type_identifier
+      (identifier))
+    (enum_body
+      (enum_variant
+        (identifier))
+      (enum_variant
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))
+        (named_type
+          (type_identifier
+            (identifier))
+          (type_arguments
+            (named_type
+              (type_identifier
+                (identifier))))))))
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (binary_expression
+          (identifier_expression
+            (identifier))
+          (identifier_expression
+            (identifier)))))))

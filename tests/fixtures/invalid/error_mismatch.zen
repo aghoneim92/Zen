@@ -1,0 +1,11 @@
+// expect: ZEN-TYPE-0041
+enum NetworkError { failed; }
+enum AppError { network; }
+
+fn getUser() -> Result<Int, NetworkError> {
+    return .ok(1);
+}
+
+fn load() -> Result<Int, AppError> {
+    return .ok(getUser()?);
+}

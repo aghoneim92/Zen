@@ -1,0 +1,11 @@
+===
+incomplete_generic
+===
+const x: Result<
+
+---
+(source_file
+  (ERROR
+    (identifier)
+    (type_identifier
+      (identifier))))

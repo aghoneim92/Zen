@@ -1,0 +1,25 @@
+===
+mutable
+===
+fn main() -> Unit { var n = 0; n = n + 1; }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (var_statement
+        (identifier)
+        (integer_literal))
+      (assignment_statement
+        (identifier_expression
+          (identifier))
+        (binary_expression
+          (identifier_expression
+            (identifier))
+          (integer_literal))))))

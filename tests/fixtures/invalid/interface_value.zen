@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0003
+interface I {} fn f(x: I) -> Unit {}

@@ -1,0 +1,1 @@
+fn f(b: Bool) -> Int { return match b { true => 1; false => 0; }; }

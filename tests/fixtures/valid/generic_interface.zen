@@ -1,0 +1,1 @@
+interface Convert<T> { fn convert(self) -> T; } struct S {} impl Convert<Int> for S { fn convert(self) -> Int { return 1; } } fn f<U: Convert<Int>>(u: U) -> Int { return u.convert(); } fn main() -> Unit { let n = f(S {}); }

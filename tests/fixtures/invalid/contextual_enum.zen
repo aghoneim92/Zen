@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0011
+fn main() -> Unit { let x = .some(1); }

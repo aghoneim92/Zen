@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0001
+fn main() -> Unit { let value: Float = 10; }

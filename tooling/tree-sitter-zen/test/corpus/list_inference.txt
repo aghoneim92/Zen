@@ -1,0 +1,32 @@
+===
+list_inference
+===
+fn main() -> Unit { let values = [1, 2, 3]; for value in values { let next = value + 1; } }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (list_expression
+          (integer_literal)
+          (integer_literal)
+          (integer_literal)))
+      (for_statement
+        (identifier)
+        (identifier_expression
+          (identifier))
+        (block
+          (let_statement
+            (identifier)
+            (binary_expression
+              (identifier_expression
+                (identifier))
+              (integer_literal))))))))

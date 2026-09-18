@@ -1,0 +1,36 @@
+===
+async_lambda
+===
+fn main() -> Unit { let f: () -> Task<Int> = async () { return 1; }; let work = f(); }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (function_type
+          (named_type
+            (type_identifier
+              (identifier))
+            (type_arguments
+              (named_type
+                (type_identifier
+                  (identifier))))))
+        (lambda_expression
+          (lambda_parameters)
+          (block
+            (return_statement
+              (integer_literal)))))
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments))))))

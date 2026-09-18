@@ -1,0 +1,76 @@
+===
+propagation
+===
+fn f(x: Option<Int>) -> Option<String> { let value = x?; return .some("ok"); } fn g(x: Result<Int, String>) -> Result<String, String> { let value = x?; return .ok("ok"); }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))
+          (type_arguments
+            (named_type
+              (type_identifier
+                (identifier)))))))
+    (named_type
+      (type_identifier
+        (identifier))
+      (type_arguments
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (block
+      (let_statement
+        (identifier)
+        (propagation_expression
+          (identifier_expression
+            (identifier))))
+      (return_statement
+        (call_expression
+          (enum_constructor_expression
+            (identifier))
+          (arguments
+            (string_literal))))))
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))
+          (type_arguments
+            (named_type
+              (type_identifier
+                (identifier)))
+            (named_type
+              (type_identifier
+                (identifier)))))))
+    (named_type
+      (type_identifier
+        (identifier))
+      (type_arguments
+        (named_type
+          (type_identifier
+            (identifier)))
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (block
+      (let_statement
+        (identifier)
+        (propagation_expression
+          (identifier_expression
+            (identifier))))
+      (return_statement
+        (call_expression
+          (enum_constructor_expression
+            (identifier))
+          (arguments
+            (string_literal)))))))

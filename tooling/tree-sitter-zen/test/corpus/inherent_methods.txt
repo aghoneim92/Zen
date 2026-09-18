@@ -1,0 +1,55 @@
+===
+inherent_methods
+===
+struct User { text: String; } impl User { fn display(self) -> String { return self.text; } } fn main() -> Unit { let s = User { text: "Zen" }.display(); }
+
+---
+
+(source_file
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (struct_body
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (impl_declaration
+    (named_type
+      (type_identifier
+        (identifier)))
+    (impl_body
+      (function_declaration
+        (identifier)
+        (parameters
+          (parameter))
+        (named_type
+          (type_identifier
+            (identifier)))
+        (block
+          (return_statement
+            (member_expression
+              (identifier_expression)
+              (identifier)))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (call_expression
+          (member_expression
+            (struct_expression
+              (named_type
+                (type_identifier
+                  (identifier)))
+              (field_initializers
+                (field_initializer
+                  (identifier)
+                  (string_literal))))
+            (identifier))
+          (arguments))))))

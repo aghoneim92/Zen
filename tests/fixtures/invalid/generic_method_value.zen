@@ -1,0 +1,4 @@
+// expect: ZEN-TYPE-0026
+struct S {}
+impl S { fn identity<T>(self, value: T) -> T { return value; } }
+fn main() -> Unit { let f = S {}.identity; }

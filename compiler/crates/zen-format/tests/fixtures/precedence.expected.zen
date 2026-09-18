@@ -1,0 +1,11 @@
+async fn f() -> Unit {
+    let x = (await op(1).next())?;
+    let y = await op()?;
+    let a = -(1 + 2) * 3 - -4;
+    let b = !false || true && 1 < 2;
+    let c = (1 + 2) * 3;
+    let d = identity<List<Int>>([1, 2]);
+    let e = (op())?.next();
+    let f = "{ ( > //";
+    let g = '}';
+}

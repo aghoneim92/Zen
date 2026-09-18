@@ -1,0 +1,46 @@
+===
+default_previous
+===
+fn f(a: Int, b: Int = a + 1) -> Int { return b; } fn main() -> Unit { let n = f(1); }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))
+        (binary_expression
+          (identifier_expression
+            (identifier))
+          (integer_literal))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (identifier_expression
+          (identifier)))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (integer_literal)))))))

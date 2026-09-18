@@ -1,0 +1,9 @@
+[package]
+name = "zen-format"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+zen-syntax.workspace = true
+zen-diagnostics.workspace = true

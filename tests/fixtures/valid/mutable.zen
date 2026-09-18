@@ -1,0 +1,1 @@
+fn main() -> Unit { var n = 0; n = n + 1; }

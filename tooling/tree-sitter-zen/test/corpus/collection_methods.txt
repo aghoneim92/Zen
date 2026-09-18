@@ -1,0 +1,67 @@
+===
+collection_methods
+===
+fn main() -> Unit { let values = [1, 2]; let head: Option<Int> = values.first(); let item: Option<Int> = values.get(3); let more: List<Int> = values.append(3); }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (list_expression
+          (integer_literal)
+          (integer_literal)))
+      (let_statement
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))
+          (type_arguments
+            (named_type
+              (type_identifier
+                (identifier)))))
+        (call_expression
+          (member_expression
+            (identifier_expression
+              (identifier))
+            (identifier))
+          (arguments)))
+      (let_statement
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))
+          (type_arguments
+            (named_type
+              (type_identifier
+                (identifier)))))
+        (call_expression
+          (member_expression
+            (identifier_expression
+              (identifier))
+            (identifier))
+          (arguments
+            (integer_literal))))
+      (let_statement
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))
+          (type_arguments
+            (named_type
+              (type_identifier
+                (identifier)))))
+        (call_expression
+          (member_expression
+            (identifier_expression
+              (identifier))
+            (identifier))
+          (arguments
+            (integer_literal)))))))

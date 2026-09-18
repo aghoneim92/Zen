@@ -1,0 +1,24 @@
+===
+imports
+===
+import app.models.User as Person; public struct A { public field: Person; }
+
+---
+(source_file
+  (import_declaration
+    (qualified_identifier
+      (identifier)
+      (identifier)
+      (identifier))
+    (identifier))
+  (struct_declaration
+    (visibility)
+    (type_identifier
+      (identifier))
+    (struct_body
+      (struct_field
+        (visibility)
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))))

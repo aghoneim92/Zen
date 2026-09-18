@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0001
+fn f<T>(a: T, b: T) -> T { return a; } fn main() -> Unit { let n = f(1, "x"); }

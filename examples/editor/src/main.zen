@@ -1,0 +1,20 @@
+import models.User;
+import models.State;
+import models.Describe;
+
+native async fn loadUser(id: Int) -> Result<User, String>;
+
+fn describe(status: State) -> String {
+    return match status {
+        .idle => "Waiting";
+        .ready(user) => user.describe();
+        .failed(message) => message;
+    };
+}
+
+async fn main() -> Result<Unit, String> {
+    let user = await loadUser(1)?;
+    let status: State = .ready(user);
+    let description = describe(status);
+    return .ok(unit);
+}

@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0032
+native fn random() -> Int; fn f(x: Int = random()) -> Unit {}

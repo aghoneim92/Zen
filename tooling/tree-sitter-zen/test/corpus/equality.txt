@@ -1,0 +1,40 @@
+===
+equality
+===
+struct S { n: Int; } fn f(a: S, b: S) -> Bool { return a == b; }
+
+---
+
+(source_file
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (struct_body
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (binary_expression
+          (identifier_expression
+            (identifier))
+          (identifier_expression
+            (identifier)))))))

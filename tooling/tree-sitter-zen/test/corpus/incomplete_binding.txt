@@ -1,0 +1,14 @@
+===
+incomplete_binding
+===
+fn f() -> Unit { let value =
+
+---
+(source_file
+  (ERROR
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (identifier)))

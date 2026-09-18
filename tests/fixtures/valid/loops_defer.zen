@@ -1,0 +1,1 @@
+native fn close() -> Unit; fn main() -> Unit { var n = 0; defer close(); while n < 5 { n = n + 1; if n == 2 { continue; } if n == 4 { break; } } }

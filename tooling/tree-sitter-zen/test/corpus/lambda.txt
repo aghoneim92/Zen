@@ -1,0 +1,67 @@
+===
+lambda
+===
+fn apply(f: (Int) -> Int) -> Int { return f(1); } fn main() -> Unit { let n = apply((x) { return x + 1; }); let f = (x: Int) -> Int { return x; }; }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (function_type
+          (named_type
+            (type_identifier
+              (identifier)))
+          (named_type
+            (type_identifier
+              (identifier))))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (integer_literal))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (lambda_expression
+              (lambda_parameters
+                (identifier))
+              (block
+                (return_statement
+                  (binary_expression
+                    (identifier_expression
+                      (identifier))
+                    (integer_literal))))))))
+      (let_statement
+        (identifier)
+        (lambda_expression
+          (lambda_parameters
+            (identifier)
+            (named_type
+              (type_identifier
+                (identifier))))
+          (named_type
+            (type_identifier
+              (identifier)))
+          (block
+            (return_statement
+              (identifier_expression
+                (identifier)))))))))

@@ -1,0 +1,9 @@
+[package]
+name = "zen-semantics"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+zen-diagnostics.workspace = true
+zen-syntax.workspace = true

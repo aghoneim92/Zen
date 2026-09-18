@@ -1,0 +1,96 @@
+===
+interfaces
+===
+interface Named { fn name(self) -> String; } struct User { text: String; } impl Named for User { fn name(self) -> String { return self.text; } } fn render<T: Named>(value: T) -> String { return value.name(); } fn main() -> Unit { let s = render(User { text: "Zen" }); }
+
+---
+
+(source_file
+  (interface_declaration
+    (type_identifier
+      (identifier))
+    (interface_body
+      (interface_method
+        (identifier)
+        (parameters
+          (parameter))
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (struct_body
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (impl_declaration
+    (named_type
+      (type_identifier
+        (identifier)))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (impl_body
+      (function_declaration
+        (identifier)
+        (parameters
+          (parameter))
+        (named_type
+          (type_identifier
+            (identifier)))
+        (block
+          (return_statement
+            (member_expression
+              (identifier_expression)
+              (identifier)))))))
+  (function_declaration
+    (identifier)
+    (generic_parameters
+      (generic_parameter
+        (type_identifier
+          (identifier))
+        (generic_constraint
+          (named_type
+            (type_identifier
+              (identifier))))))
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (call_expression
+          (member_expression
+            (identifier_expression
+              (identifier))
+            (identifier))
+          (arguments)))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (struct_expression
+              (named_type
+                (type_identifier
+                  (identifier)))
+              (field_initializers
+                (field_initializer
+                  (identifier)
+                  (string_literal))))))))))

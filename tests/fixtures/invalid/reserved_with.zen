@@ -1,0 +1,2 @@
+// expect: ZEN-PARSE-0001
+fn main() -> Unit { let with = 1; }

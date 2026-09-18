@@ -1,0 +1,2 @@
+// expect: ZEN-MATCH-0001
+enum E { pair(Bool, Bool); } fn f(e: E) -> Int { return match e { .pair(true, _) => 1; .pair(_, true) => 2; }; }

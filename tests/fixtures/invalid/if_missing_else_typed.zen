@@ -1,0 +1,4 @@
+// expect: ZEN-TYPE-0013
+fn main() -> Unit {
+    let value: Unit = if true {};
+}

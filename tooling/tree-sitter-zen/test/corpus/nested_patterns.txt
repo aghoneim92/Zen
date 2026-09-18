@@ -1,0 +1,55 @@
+===
+nested_patterns
+===
+enum E { pair(Bool, Bool); } fn f(e: E) -> Int { return match e { .pair(true, _) => 1; .pair(false, true) => 2; .pair(false, false) => 3; }; }
+
+---
+
+(source_file
+  (enum_declaration
+    (type_identifier
+      (identifier))
+    (enum_body
+      (enum_variant
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (match_expression
+          (identifier_expression
+            (identifier))
+          (match_body
+            (match_arm
+              (variant_pattern
+                (identifier)
+                (boolean_literal)
+                (identifier))
+              (integer_literal))
+            (match_arm
+              (variant_pattern
+                (identifier)
+                (boolean_literal)
+                (boolean_literal))
+              (integer_literal))
+            (match_arm
+              (variant_pattern
+                (identifier)
+                (boolean_literal)
+                (boolean_literal))
+              (integer_literal))))))))

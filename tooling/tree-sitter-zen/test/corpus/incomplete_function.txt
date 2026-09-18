@@ -1,0 +1,9 @@
+===
+incomplete_function
+===
+fn foo(
+
+---
+(source_file
+  (ERROR
+    (identifier)))

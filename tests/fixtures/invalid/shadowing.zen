@@ -1,0 +1,7 @@
+// expect: ZEN-NAME-0007
+fn main() -> Unit {
+    let value = 1;
+    if true {
+        let value = 2;
+    }
+}

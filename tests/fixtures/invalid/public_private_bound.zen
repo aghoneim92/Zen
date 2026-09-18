@@ -1,0 +1,2 @@
+// expect: ZEN-NAME-0006
+interface I {} public fn f<T: I>(x: T) -> Unit {}

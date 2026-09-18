@@ -1,0 +1,1 @@
+fn apply(f: (Int) -> Int) -> Int { return f(1); } fn main() -> Unit { let n = apply((x) { return x + 1; }); let f = (x: Int) -> Int { return x; }; }

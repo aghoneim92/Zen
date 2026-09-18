@@ -1,0 +1,2 @@
+// expect: ZEN-MATCH-0001
+fn f(b: Bool) -> Int { return match b { true => 1; }; }

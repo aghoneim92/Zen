@@ -1,0 +1,50 @@
+===
+await
+===
+native async fn load() -> Result<Int, String>; async fn main() -> Result<Int, String> { let value = await load()?; return .ok(value); }
+
+---
+
+(source_file
+  (native_function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier))
+      (type_arguments
+        (named_type
+          (type_identifier
+            (identifier)))
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier))
+      (type_arguments
+        (named_type
+          (type_identifier
+            (identifier)))
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (block
+      (let_statement
+        (identifier)
+        (propagation_expression
+          (await_expression
+            (call_expression
+              (identifier_expression
+                (identifier))
+              (arguments)))))
+      (return_statement
+        (call_expression
+          (enum_constructor_expression
+            (identifier))
+          (arguments
+            (identifier_expression
+              (identifier))))))))

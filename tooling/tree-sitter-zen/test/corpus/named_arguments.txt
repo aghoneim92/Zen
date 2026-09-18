@@ -1,0 +1,58 @@
+===
+named_arguments
+===
+fn add(first: Int, second: Int = 1) -> Int { return first + second; } fn main() -> Unit { let x = add(second: 2, first: 1); let y = add(1); }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))
+        (integer_literal)))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (binary_expression
+          (identifier_expression
+            (identifier))
+          (identifier_expression
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (named_argument
+              (identifier)
+              (integer_literal))
+            (named_argument
+              (identifier)
+              (integer_literal)))))
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (integer_literal)))))))

@@ -1,0 +1,34 @@
+===
+constants
+===
+const a: Int = 3; public const b: Int = a * 2; fn f() -> Int { return b; }
+
+---
+
+(source_file
+  (const_declaration
+    (identifier)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (integer_literal))
+  (const_declaration
+    (visibility)
+    (identifier)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (binary_expression
+      (identifier_expression
+        (identifier))
+      (integer_literal)))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (identifier_expression
+          (identifier))))))

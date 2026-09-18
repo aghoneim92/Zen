@@ -1,0 +1,2 @@
+// expect: ZEN-MATCH-0001
+enum State { idle; loading; ready; } fn render(s: State) -> Unit { match s { .idle => unit; .loading => unit; } }

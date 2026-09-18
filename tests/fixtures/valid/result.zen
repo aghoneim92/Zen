@@ -1,0 +1,1 @@
+enum Error { failed; } fn f() -> Result<Int, Error> { return .ok(1); }

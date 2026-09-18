@@ -1,0 +1,1 @@
+struct User { text: String; } impl User { fn display(self) -> String { return self.text; } } fn main() -> Unit { let s = User { text: "Zen" }.display(); }

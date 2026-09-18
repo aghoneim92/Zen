@@ -1,0 +1,52 @@
+===
+generic_identity
+===
+fn identity<T>(value: T) -> T { return value; } fn main() -> Unit { let n = identity(42); let s = identity<String>("Zen"); }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (generic_parameters
+      (generic_parameter
+        (type_identifier
+          (identifier))))
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (identifier_expression
+          (identifier)))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (integer_literal))))
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier)
+            (type_arguments
+              (named_type
+                (type_identifier
+                  (identifier)))))
+          (arguments
+            (string_literal)))))))

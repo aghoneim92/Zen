@@ -1,0 +1,18 @@
+===
+incomplete_member
+===
+fn f() -> Unit { user. }
+
+---
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (member_expression
+        (identifier_expression
+          (identifier))
+        (MISSING identifier)))))

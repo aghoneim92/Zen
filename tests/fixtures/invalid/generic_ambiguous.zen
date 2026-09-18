@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0026
+native fn f<T>() -> T; fn main() -> Unit { let n = f(); }

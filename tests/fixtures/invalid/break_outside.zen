@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0015
+fn main() -> Unit { break; }

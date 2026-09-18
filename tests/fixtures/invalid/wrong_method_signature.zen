@@ -1,0 +1,2 @@
+// expect: ZEN-IMPL-0005
+interface Named { fn name(self) -> String; } struct S {} impl Named for S { fn name(self) -> Int { return 1; } }

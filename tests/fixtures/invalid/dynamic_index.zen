@@ -1,0 +1,2 @@
+// expect: ZEN-PARSE-0001
+fn main() -> Unit { let values = [1, 2, 3]; let value = values[0]; }

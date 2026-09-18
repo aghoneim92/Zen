@@ -1,0 +1,1 @@
+enum Tree { leaf(Int); branch(List<Tree>); } enum Chain { end; next(Int, Option<Chain>); } fn eq(a: Chain, b: Chain) -> Bool { return a == b; }

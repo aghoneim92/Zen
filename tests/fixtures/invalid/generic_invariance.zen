@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0001
+fn f(x: List<Int>) -> Unit {} fn main() -> Unit { let x: List<Float> = []; f(x); }

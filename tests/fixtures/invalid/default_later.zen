@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0032 ZEN-NAME-0001
+fn f(a: Int = b, b: Int = 1) -> Unit {}

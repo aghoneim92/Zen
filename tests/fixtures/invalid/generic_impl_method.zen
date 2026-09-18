@@ -1,0 +1,4 @@
+// expect: ZEN-IMPL-0005
+interface I { fn f(self) -> Unit; }
+struct S {}
+impl I for S { fn f<T>(self) -> Unit {} }

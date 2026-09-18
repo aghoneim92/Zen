@@ -1,0 +1,2 @@
+// expect: ZEN-NAME-0003
+fn f() -> Unit {} fn f() -> Unit {}

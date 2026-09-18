@@ -1,0 +1,1 @@
+fn main() -> Unit { let f: () -> Task<Int> = async () { return 1; }; let work = f(); }

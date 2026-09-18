@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0022
+struct S<T> { value: T; next: Option<S<() -> Unit>>; } fn eq(a: S<Int>, b: S<Int>) -> Bool { return a == b; }

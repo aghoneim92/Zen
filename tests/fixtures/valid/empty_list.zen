@@ -1,0 +1,1 @@
+struct User { name: String; } fn main() -> Unit { let values: List<User> = []; }

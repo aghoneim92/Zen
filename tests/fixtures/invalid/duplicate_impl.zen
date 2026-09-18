@@ -1,0 +1,2 @@
+// expect: ZEN-IMPL-0004
+interface I {} struct S {} impl I for S {} impl I for S {}

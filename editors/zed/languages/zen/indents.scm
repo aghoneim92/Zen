@@ -1,0 +1,13 @@
+(block "{" @start "}" @end) @indent
+(struct_body "{" @start "}" @end) @indent
+(enum_body "{" @start "}" @end) @indent
+(interface_body "{" @start "}" @end) @indent
+(impl_body "{" @start "}" @end) @indent
+(match_body "{" @start "}" @end) @indent
+(field_initializers "{" @start "}" @end) @indent
+(arguments "(" @start ")" @end) @indent
+(parameters "(" @start ")" @end) @indent
+(lambda_parameters "(" @start ")" @end) @indent
+(list_expression "[" @start "]" @end) @indent
+(generic_parameters "<" @start ">" @end) @indent
+(type_arguments "<" @start ">" @end) @indent

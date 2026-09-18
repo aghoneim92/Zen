@@ -1,0 +1,9 @@
+error[ZEN-NAME-0007]: local shadowing of `value` is forbidden
+  --> shadowing.zen:5:13
+   |
+  5 |         let value = 2;
+   |             ^^^^^
+  --> shadowing.zen:3:9
+   |
+  3 |     let value = 1;
+   |         ^^^^^ previous binding

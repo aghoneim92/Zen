@@ -1,0 +1,1 @@
+native async fn load() -> Result<Int, String>; async fn main() -> Result<Int, String> { let value = await load()?; return .ok(value); }

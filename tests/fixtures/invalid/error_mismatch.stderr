@@ -1,0 +1,7 @@
+error[ZEN-TYPE-0041]: cannot propagate this value from the enclosing return type
+  --> error_mismatch.zen:10:16
+   |
+ 10 |     return .ok(getUser()?);
+   |                ^^^^^^^^^^
+   = expected Result<Int, AppError>, received Result<Int, NetworkError>
+   = help: convert the error explicitly before applying `?`; Option and Result cannot interconvert implicitly

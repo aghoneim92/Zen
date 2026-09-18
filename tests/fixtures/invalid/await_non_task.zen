@@ -1,0 +1,2 @@
+// expect: ZEN-ASYNC-0002
+async fn f() -> Int { return await 1; }

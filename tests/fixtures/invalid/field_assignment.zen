@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0006
+struct S { n: Int; } fn main() -> Unit { var s = S { n: 1 }; s.n = 2; }

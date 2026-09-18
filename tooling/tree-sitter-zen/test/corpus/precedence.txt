@@ -1,0 +1,44 @@
+===
+precedence
+===
+fn f() -> Unit { let x = a + b * c < d == e && f || g; let y = await load()?; }
+
+---
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (binary_expression
+              (binary_expression
+                (binary_expression
+                  (identifier_expression
+                    (identifier))
+                  (binary_expression
+                    (identifier_expression
+                      (identifier))
+                    (identifier_expression
+                      (identifier))))
+                (identifier_expression
+                  (identifier)))
+              (identifier_expression
+                (identifier)))
+            (identifier_expression
+              (identifier)))
+          (identifier_expression
+            (identifier))))
+      (let_statement
+        (identifier)
+        (propagation_expression
+          (await_expression
+            (call_expression
+              (identifier_expression
+                (identifier))
+              (arguments))))))))

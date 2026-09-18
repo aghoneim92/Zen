@@ -1,0 +1,23 @@
+===
+comments
+===
+/* block */ // line
+fn f() -> Unit { let text = "λ😀"; let c = 'λ'; }
+
+---
+(source_file
+  (block_comment)
+  (line_comment)
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (string_literal))
+      (let_statement
+        (identifier)
+        (char_literal)))))

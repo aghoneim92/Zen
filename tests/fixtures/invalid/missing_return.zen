@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0001 ZEN-TYPE-0010
+fn f() -> Int {}

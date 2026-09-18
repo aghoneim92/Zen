@@ -1,0 +1,90 @@
+===
+generic_method
+===
+struct S {}
+impl S {
+    fn identity<T>(self, value: T) -> T { return value; }
+}
+fn main() -> Unit {
+    let s = S {};
+    let n = s.identity(1);
+    let f: (Int) -> Int = s.identity;
+    let m = f(n);
+}
+
+---
+
+(source_file
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (struct_body))
+  (impl_declaration
+    (named_type
+      (type_identifier
+        (identifier)))
+    (impl_body
+      (function_declaration
+        (identifier)
+        (generic_parameters
+          (generic_parameter
+            (type_identifier
+              (identifier))))
+        (parameters
+          (parameter)
+          (parameter
+            (identifier)
+            (named_type
+              (type_identifier
+                (identifier)))))
+        (named_type
+          (type_identifier
+            (identifier)))
+        (block
+          (return_statement
+            (identifier_expression
+              (identifier)))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (struct_expression
+          (named_type
+            (type_identifier
+              (identifier)))
+          (field_initializers)))
+      (let_statement
+        (identifier)
+        (call_expression
+          (member_expression
+            (identifier_expression
+              (identifier))
+            (identifier))
+          (arguments
+            (integer_literal))))
+      (let_statement
+        (identifier)
+        (function_type
+          (named_type
+            (type_identifier
+              (identifier)))
+          (named_type
+            (type_identifier
+              (identifier))))
+        (member_expression
+          (identifier_expression
+            (identifier))
+          (identifier)))
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (identifier_expression
+              (identifier))))))))

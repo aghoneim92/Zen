@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0012
+fn main() -> Unit { let users = []; }

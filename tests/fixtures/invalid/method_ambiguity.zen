@@ -1,0 +1,2 @@
+// expect: ZEN-NAME-0009
+interface A { fn f(self) -> Unit; } interface B { fn f(self) -> Unit; } struct S {} impl A for S { fn f(self) -> Unit {} } impl B for S { fn f(self) -> Unit {} } fn main() -> Unit { S {}.f(); }

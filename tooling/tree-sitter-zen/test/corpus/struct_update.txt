@@ -1,0 +1,44 @@
+===
+struct_update
+===
+struct User { name: String; } fn main() -> Unit { var u = User { name: "Zen" }; u = u with { name: "Ali" }; }
+
+---
+
+(source_file
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (struct_body
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (var_statement
+        (identifier)
+        (struct_expression
+          (named_type
+            (type_identifier
+              (identifier)))
+          (field_initializers
+            (field_initializer
+              (identifier)
+              (string_literal)))))
+      (assignment_statement
+        (identifier_expression
+          (identifier))
+        (struct_update_expression
+          (identifier_expression
+            (identifier))
+          (field_initializers
+            (field_initializer
+              (identifier)
+              (string_literal))))))))

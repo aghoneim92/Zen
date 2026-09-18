@@ -1,0 +1,2 @@
+// expect: ZEN-NAME-0004
+fn f(x: Missing) -> Unit {}

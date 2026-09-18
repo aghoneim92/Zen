@@ -1,0 +1,4 @@
+// expect: ZEN-IMPL-0002
+fn main() -> Unit {
+    let f = (self: Int) -> Int { return self; };
+}

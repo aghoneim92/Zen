@@ -1,0 +1,13 @@
+===
+incomplete_field
+===
+struct User { name: }
+
+---
+(source_file
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (struct_body
+      (ERROR
+        (identifier)))))

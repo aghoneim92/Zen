@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0020
+fn main() -> Unit { let n = -1u8; }

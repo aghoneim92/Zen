@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0031
+const a: Int = b; const b: Int = a;

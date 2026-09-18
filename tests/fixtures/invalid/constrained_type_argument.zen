@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0030
+interface I {} struct Bound<T: I> { value: T; } native fn consume<T>() -> Unit; fn main() -> Unit { consume<Bound<Int>>(); }

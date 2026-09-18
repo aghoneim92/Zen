@@ -1,0 +1,1 @@
+fn id<T>(x: T) -> T { return x; } fn main() -> Unit { let f = id<Int>; let n = f(1); }

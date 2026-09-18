@@ -1,0 +1,22 @@
+===
+incomplete_match
+===
+fn f() -> Unit { match state { .loading => } }
+
+---
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (expression_statement
+        (match_expression
+          (identifier_expression
+            (identifier))
+          (match_body
+            (ERROR
+              (variant_pattern
+                (identifier)))))))))

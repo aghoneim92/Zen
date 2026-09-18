@@ -1,0 +1,1 @@
+fn add(first: Int, second: Int = 1) -> Int { return first + second; } fn main() -> Unit { let x = add(second: 2, first: 1); let y = add(1); }

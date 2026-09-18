@@ -1,0 +1,31 @@
+===
+match_expression
+===
+fn f(b: Bool) -> Int { return match b { true => 1; false => 0; }; }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (match_expression
+          (identifier_expression
+            (identifier))
+          (match_body
+            (match_arm
+              (boolean_literal)
+              (integer_literal))
+            (match_arm
+              (boolean_literal)
+              (integer_literal))))))))

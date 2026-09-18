@@ -1,0 +1,42 @@
+===
+option
+===
+fn f() -> Option<Int> { return .some(1); } fn main() -> Unit { let x = Option<Int>.none; }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier))
+      (type_arguments
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (block
+      (return_statement
+        (call_expression
+          (enum_constructor_expression
+            (identifier))
+          (arguments
+            (integer_literal))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (member_expression
+          (identifier_expression
+            (identifier)
+            (type_arguments
+              (named_type
+                (type_identifier
+                  (identifier)))))
+          (identifier))))))

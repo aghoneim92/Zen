@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0009 ZEN-TYPE-0008
+fn f(x: Int) -> Unit {} fn main() -> Unit { f(y: 1); }

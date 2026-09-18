@@ -1,0 +1,15 @@
+id = "zen"
+name = "Zen"
+version = "0.1.0"
+schema_version = 1
+authors = ["Zen contributors"]
+description = "Zen core language syntax and compiler language server"
+
+[language_servers.zen]
+name = "Zen"
+languages = ["Zen"]
+
+# scripts/prepare-dev.py fills in a local grammar repository and revision.
+[grammars.zen]
+repository = "file:///tmp/zen-tree-sitter-dev"
+rev = "HEAD"

@@ -1,0 +1,1 @@
+fn main() -> Unit { let values = [1, 2]; let head: Option<Int> = values.first(); let item: Option<Int> = values.get(3); let more: List<Int> = values.append(3); }

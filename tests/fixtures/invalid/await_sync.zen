@@ -1,0 +1,2 @@
+// expect: ZEN-ASYNC-0001
+native async fn load() -> Int; fn f() -> Int { return await load(); }

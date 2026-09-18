@@ -1,0 +1,65 @@
+===
+generic_struct
+===
+struct Pair<A, B> { first: A; second: B; } fn main() -> Unit { let p = Pair<Int, String> { first: 1, second: "Zen" }; let s: String = p.second; }
+
+---
+
+(source_file
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (generic_parameters
+      (generic_parameter
+        (type_identifier
+          (identifier)))
+      (generic_parameter
+        (type_identifier
+          (identifier))))
+    (struct_body
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (struct_expression
+          (named_type
+            (type_identifier
+              (identifier))
+            (type_arguments
+              (named_type
+                (type_identifier
+                  (identifier)))
+              (named_type
+                (type_identifier
+                  (identifier)))))
+          (field_initializers
+            (field_initializer
+              (identifier)
+              (integer_literal))
+            (field_initializer
+              (identifier)
+              (string_literal)))))
+      (let_statement
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))
+        (member_expression
+          (identifier_expression
+            (identifier))
+          (identifier))))))

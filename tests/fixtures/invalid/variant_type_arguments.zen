@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0002
+fn main() -> Unit { let n = Option<Int>.some<String>(1); }

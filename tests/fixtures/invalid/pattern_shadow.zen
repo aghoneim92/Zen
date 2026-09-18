@@ -1,0 +1,2 @@
+// expect: ZEN-NAME-0007
+fn f(x: Int, y: Option<Int>) -> Unit { match y { .some(x) => unit; .none => unit; } }

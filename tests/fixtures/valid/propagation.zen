@@ -1,0 +1,1 @@
+fn f(x: Option<Int>) -> Option<String> { let value = x?; return .some("ok"); } fn g(x: Result<Int, String>) -> Result<String, String> { let value = x?; return .ok("ok"); }

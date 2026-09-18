@@ -1,0 +1,39 @@
+===
+never
+===
+native fn stop() -> Never; fn f(b: Bool) -> Int { if b { return 1; } else { stop(); } }
+
+---
+
+(source_file
+  (native_function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier))))
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (expression_statement
+        (if_expression
+          (identifier_expression
+            (identifier))
+          (block
+            (return_statement
+              (integer_literal)))
+          (block
+            (expression_statement
+              (call_expression
+                (identifier_expression
+                  (identifier))
+                (arguments)))))))))

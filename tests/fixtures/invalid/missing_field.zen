@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0024
+struct User { name: String; age: Int; } fn main() -> Unit { let user = User { name: "Zen" }; }

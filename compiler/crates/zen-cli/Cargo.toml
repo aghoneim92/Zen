@@ -1,0 +1,19 @@
+[package]
+name = "zen-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+zen-format = { path = "../zen-format" }
+zen-lsp = { path = "../zen-lsp" }
+zen-diagnostics.workspace = true
+zen-syntax.workspace = true
+zen-semantics.workspace = true
+
+[[bin]]
+name = "zen"
+path = "src/main.rs"
+
+[dev-dependencies]
+serde_json = "1"

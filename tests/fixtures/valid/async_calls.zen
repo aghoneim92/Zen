@@ -1,0 +1,1 @@
+async fn load() -> Int { return 1; } fn main() -> Unit { let task: Task<Int> = load(); }

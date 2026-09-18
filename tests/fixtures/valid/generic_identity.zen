@@ -1,0 +1,1 @@
+fn identity<T>(value: T) -> T { return value; } fn main() -> Unit { let n = identity(42); let s = identity<String>("Zen"); }

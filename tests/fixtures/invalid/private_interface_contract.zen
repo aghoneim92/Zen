@@ -1,0 +1,3 @@
+// expect: ZEN-NAME-0006
+struct Secret {}
+public interface I { fn get(self) -> Secret; }

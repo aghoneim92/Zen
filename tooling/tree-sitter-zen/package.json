@@ -1,0 +1,1 @@
+{"name":"tree-sitter-zen","version":"0.1.0","private":true,"scripts":{"generate":"tree-sitter generate","test":"tree-sitter test"},"devDependencies":{"tree-sitter-cli":"0.26.3"}}

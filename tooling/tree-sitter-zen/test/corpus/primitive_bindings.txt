@@ -1,0 +1,37 @@
+===
+primitive_bindings
+===
+fn main() -> Unit { let n = 1234567890123456789012345678901234567890; let s = "Zen"; let b = true; let c = 'λ'; let f = 1.5e10; let byte = 255u8; let low = -128i8; }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (integer_literal))
+      (let_statement
+        (identifier)
+        (string_literal))
+      (let_statement
+        (identifier)
+        (boolean_literal))
+      (let_statement
+        (identifier)
+        (char_literal))
+      (let_statement
+        (identifier)
+        (float_literal))
+      (let_statement
+        (identifier)
+        (integer_literal))
+      (let_statement
+        (identifier)
+        (unary_expression
+          (integer_literal))))))

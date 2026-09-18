@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0004
+fn main() -> Unit { let count = 0; count = 1; }

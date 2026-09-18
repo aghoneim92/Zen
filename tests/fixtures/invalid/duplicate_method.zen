@@ -1,0 +1,2 @@
+// expect: ZEN-NAME-0003
+struct S {} impl S { fn f(self) -> Unit {} } impl S { fn f(self) -> Unit {} }

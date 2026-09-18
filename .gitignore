@@ -1,0 +1,7 @@
+/target/
+.DS_Store
+/editors/zed/target/
+/editors/zed/extension.wasm
+/editors/zed/grammars/
+/tooling/tree-sitter-zen/src/
+/tooling/tree-sitter-zen/node_modules/

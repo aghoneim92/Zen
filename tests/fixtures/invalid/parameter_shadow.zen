@@ -1,0 +1,2 @@
+// expect: ZEN-NAME-0007
+fn f(x: Int) -> Unit { let x = 2; }

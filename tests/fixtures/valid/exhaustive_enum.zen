@@ -1,0 +1,1 @@
+enum State { idle; ready(Int); } fn f(s: State) -> Int { return match s { .idle => 0; .ready(x) => x; }; }

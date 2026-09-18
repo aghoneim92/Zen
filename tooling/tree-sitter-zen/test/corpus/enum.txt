@@ -1,0 +1,42 @@
+===
+enum
+===
+enum State { idle; ready(Int); } fn main() -> Unit { let s = State.ready(42); let t: State = .idle; }
+
+---
+
+(source_file
+  (enum_declaration
+    (type_identifier
+      (identifier))
+    (enum_body
+      (enum_variant
+        (identifier))
+      (enum_variant
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (call_expression
+          (member_expression
+            (identifier_expression
+              (identifier))
+            (identifier))
+          (arguments
+            (integer_literal))))
+      (let_statement
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))
+        (enum_constructor_expression
+          (identifier))))))

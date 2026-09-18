@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0022
+fn f() -> Unit {} fn main() -> Unit { let equal = f == f; }

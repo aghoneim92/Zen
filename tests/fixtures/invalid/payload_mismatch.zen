@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0001
+fn f() -> Option<Int> { return .some("x"); }

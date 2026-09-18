@@ -1,0 +1,1 @@
+struct S { n: Int; } fn f(a: S, b: S) -> Bool { return a == b; }

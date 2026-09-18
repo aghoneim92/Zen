@@ -1,0 +1,1 @@
+fn f() -> Option<Int> { return .some(1); } fn main() -> Unit { let x = Option<Int>.none; }

@@ -1,0 +1,10 @@
+struct S {}
+impl S {
+    fn identity<T>(self, value: T) -> T { return value; }
+}
+fn main() -> Unit {
+    let s = S {};
+    let n = s.identity(1);
+    let f: (Int) -> Int = s.identity;
+    let m = f(n);
+}

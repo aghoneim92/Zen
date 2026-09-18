@@ -1,0 +1,1 @@
+fn main() -> Unit { let n = 1234567890123456789012345678901234567890; let s = "Zen"; let b = true; let c = 'λ'; let f = 1.5e10; let byte = 255u8; let low = -128i8; }

@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0041
+fn f(x: Option<Int>) -> Result<Int, String> { return .ok(x?); }

@@ -1,0 +1,75 @@
+import app.models.User;
+import zen.http.Http as Client;
+
+public struct Pair<A, B> {
+    public first: A;
+    second: B;
+}
+
+enum Result<T, E> {
+    ok(T);
+    err(E);
+}
+
+interface Serializable {
+    fn serialize(self) -> String;
+}
+
+impl Serializable for User {
+    fn serialize(self) -> String {
+        return self.name;
+    }
+
+    public fn empty(self) -> Unit {
+    }
+}
+
+public async fn load<T: Serializable>(id: Int, label: String = "مرحبا 😀") -> Result<User, E> {
+    let x = 1 + 2 * 3;
+    var y = -x;
+    y = y - -2;
+    let ok = !false && true || x != y;
+    let user = (await fetch(id))?;
+    let users: List<User> = [user, user];
+    let next = User {
+        name: label,
+        id: id,
+    };
+    next = next with {
+        name: "λ",
+    };
+    if ok {
+        send(user);
+    } else {
+        send(next);
+    }
+    while ok {
+        break;
+    }
+    for item in users {
+        continue;
+    }
+    defer close();
+    let f = async (value: Int) -> String {
+        return value.toString();
+    };
+    let g: (Int, String) -> Bool = (a, b) {
+        return a == 1;
+    };
+    let title = if ok {
+        "Home"
+    } else {
+        "Away"
+    };
+    match title {
+        .ok(value) => send(value);
+        .err(error) => {
+            send(error);
+        };
+    };
+    return .ok(user);
+}
+
+native async fn fetch(id: Int) -> Result<User, E>;
+
+const LIMIT: Int = 42;

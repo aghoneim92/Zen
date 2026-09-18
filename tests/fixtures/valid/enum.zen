@@ -1,0 +1,1 @@
+enum State { idle; ready(Int); } fn main() -> Unit { let s = State.ready(42); let t: State = .idle; }

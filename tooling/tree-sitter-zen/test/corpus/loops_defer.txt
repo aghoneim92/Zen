@@ -1,0 +1,58 @@
+===
+loops_defer
+===
+native fn close() -> Unit; fn main() -> Unit { var n = 0; defer close(); while n < 5 { n = n + 1; if n == 2 { continue; } if n == 4 { break; } } }
+
+---
+
+(source_file
+  (native_function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (var_statement
+        (identifier)
+        (integer_literal))
+      (defer_statement
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments)))
+      (while_statement
+        (binary_expression
+          (identifier_expression
+            (identifier))
+          (integer_literal))
+        (block
+          (assignment_statement
+            (identifier_expression
+              (identifier))
+            (binary_expression
+              (identifier_expression
+                (identifier))
+              (integer_literal)))
+          (expression_statement
+            (if_expression
+              (binary_expression
+                (identifier_expression
+                  (identifier))
+                (integer_literal))
+              (block
+                (continue_statement))))
+          (expression_statement
+            (if_expression
+              (binary_expression
+                (identifier_expression
+                  (identifier))
+                (integer_literal))
+              (block
+                (break_statement)))))))))

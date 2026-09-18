@@ -1,0 +1,52 @@
+===
+generic_function_value
+===
+fn id<T>(x: T) -> T { return x; } fn main() -> Unit { let f: (Int) -> Int = id; let n = f(1); }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (generic_parameters
+      (generic_parameter
+        (type_identifier
+          (identifier))))
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (identifier_expression
+          (identifier)))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (function_type
+          (named_type
+            (type_identifier
+              (identifier)))
+          (named_type
+            (type_identifier
+              (identifier))))
+        (identifier_expression
+          (identifier)))
+      (let_statement
+        (identifier)
+        (call_expression
+          (identifier_expression
+            (identifier))
+          (arguments
+            (integer_literal)))))))

@@ -1,0 +1,46 @@
+===
+exhaustive_enum
+===
+enum State { idle; ready(Int); } fn f(s: State) -> Int { return match s { .idle => 0; .ready(x) => x; }; }
+
+---
+
+(source_file
+  (enum_declaration
+    (type_identifier
+      (identifier))
+    (enum_body
+      (enum_variant
+        (identifier))
+      (enum_variant
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (return_statement
+        (match_expression
+          (identifier_expression
+            (identifier))
+          (match_body
+            (match_arm
+              (variant_pattern
+                (identifier))
+              (integer_literal))
+            (match_arm
+              (variant_pattern
+                (identifier)
+                (identifier))
+              (identifier_expression
+                (identifier)))))))))

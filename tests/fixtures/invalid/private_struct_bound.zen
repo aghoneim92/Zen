@@ -1,0 +1,3 @@
+// expect: ZEN-NAME-0006
+interface I {}
+public struct S<T: I> { public value: T; }

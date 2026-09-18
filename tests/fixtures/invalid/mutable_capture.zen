@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0005
+fn main() -> Unit { var count = 0; let f = () -> Unit { count = count + 1; }; }

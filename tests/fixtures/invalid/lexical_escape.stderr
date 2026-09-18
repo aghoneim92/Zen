@@ -1,0 +1,5 @@
+error[ZEN-LEX-0004]: unknown escape sequence
+  --> lexical_escape.zen:2:30
+   |
+  2 | fn main() -> Unit { let s = "\q"; }
+   |                              ^^

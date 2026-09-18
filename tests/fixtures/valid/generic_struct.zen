@@ -1,0 +1,1 @@
+struct Pair<A, B> { first: A; second: B; } fn main() -> Unit { let p = Pair<Int, String> { first: 1, second: "Zen" }; let s: String = p.second; }

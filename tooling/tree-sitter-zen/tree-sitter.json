@@ -1,0 +1,31 @@
+{
+  "grammars": [
+    {
+      "name": "zen",
+      "camelcase": "Zen",
+      "scope": "source.zen",
+      "path": ".",
+      "file-types": [
+        "zen"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT OR Apache-2.0",
+    "description": "Zen core language syntax",
+    "authors": [
+      {
+        "name": "Zen contributors"
+      }
+    ]
+  },
+  "bindings": {
+    "c": false,
+    "go": false,
+    "node": false,
+    "python": false,
+    "rust": false,
+    "swift": false
+  }
+}

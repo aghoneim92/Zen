@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0030
+interface Named { fn name(self) -> String; } fn f<T: Named>(x: T) -> Unit {} fn main() -> Unit { f(1); }

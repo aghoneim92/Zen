@@ -1,0 +1,42 @@
+===
+struct
+===
+struct User { name: String; age: Int; } fn main() -> Unit { let u = User { name: "Zen", age: 1 }; }
+
+---
+
+(source_file
+  (struct_declaration
+    (type_identifier
+      (identifier))
+    (struct_body
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))
+      (struct_field
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier))))))
+  (function_declaration
+    (identifier)
+    (parameters)
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (struct_expression
+          (named_type
+            (type_identifier
+              (identifier)))
+          (field_initializers
+            (field_initializer
+              (identifier)
+              (string_literal))
+            (field_initializer
+              (identifier)
+              (integer_literal))))))))

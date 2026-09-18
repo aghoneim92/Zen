@@ -1,0 +1,32 @@
+===
+if_expression
+===
+fn f(b: Bool) -> String { let s = if b { "yes" } else { "no" }; return s; }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameters
+      (parameter
+        (identifier)
+        (named_type
+          (type_identifier
+            (identifier)))))
+    (named_type
+      (type_identifier
+        (identifier)))
+    (block
+      (let_statement
+        (identifier)
+        (if_expression
+          (identifier_expression
+            (identifier))
+          (block
+            (string_literal))
+          (block
+            (string_literal))))
+      (return_statement
+        (identifier_expression
+          (identifier))))))

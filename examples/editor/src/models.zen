@@ -1,0 +1,19 @@
+public struct User {
+    public name: String;
+}
+
+public enum State {
+    idle;
+    ready(User);
+    failed(String);
+}
+
+public interface Describe {
+    fn describe(self) -> String;
+}
+
+impl Describe for User {
+    fn describe(self) -> String {
+        return self.name;
+    }
+}

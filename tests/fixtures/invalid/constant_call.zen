@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0031
+native fn value() -> Int; const n: Int = value();
