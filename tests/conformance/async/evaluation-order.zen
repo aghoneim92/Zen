@@ -1,0 +1,36 @@
+native fn record(n: Int) -> Unit;
+
+fn mark(n: Int) -> Int {
+    record(n);
+    return n;
+}
+
+async fn step(n: Int) -> Int {
+    record(n);
+    return n;
+}
+
+fn combine(a: Int, b: Int) -> Int {
+    return a + b;
+}
+
+struct Pair {
+    first: Int;
+    second: Int;
+}
+
+async fn main() -> Int {
+    let local = mark(1);
+    let call = combine(mark(2), await step(3));
+    let binary = mark(4) + await step(5);
+    let items = [mark(6), await step(7), mark(8)];
+    let pair = Pair {
+        second: mark(9),
+        first: await step(10),
+    };
+    let matched = match mark(11) {
+        11 => await step(12);
+        _ => 0;
+    };
+    return local + call + binary + pair.first + pair.second + matched;
+}

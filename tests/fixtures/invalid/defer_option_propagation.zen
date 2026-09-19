@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0042
+fn f(value: Option<Unit>) -> Option<Unit> { defer { value?; }; return .some(unit); }

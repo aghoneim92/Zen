@@ -1,0 +1,27 @@
+struct Box<T> {
+    value: T;
+}
+
+fn identity<T>(x: T) -> T {
+    return x;
+}
+
+fn unbox<T>(x: Box<T>) -> T {
+    return identity(x.value);
+}
+
+fn closure<T>(x: T) -> () -> T {
+    return () -> T {
+        return identity(x);
+    };
+}
+
+fn main() -> Bool {
+    let f: (Int) -> Int = identity;
+    let g = closure("zen");
+    return f(3) == 3 && identity(true) && unbox(
+        Box {
+            value: 4,
+        },
+    ) == 4 && g() == "zen";
+}

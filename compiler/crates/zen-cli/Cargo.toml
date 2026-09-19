@@ -5,6 +5,8 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
+zen-hir = { path = "../zen-hir" }
+zen-interpreter = { path = "../zen-interpreter" }
 zen-format = { path = "../zen-format" }
 zen-lsp = { path = "../zen-lsp" }
 zen-diagnostics.workspace = true

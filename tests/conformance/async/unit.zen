@@ -1,0 +1,6 @@
+async fn pause() -> Unit {
+}
+
+async fn main() -> Unit {
+    await pause();
+}

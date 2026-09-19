@@ -1,0 +1,26 @@
+interface Add<T> {
+    fn add(self, a: T, b: T = a) -> T;
+}
+
+struct S {
+}
+
+impl Add<Int> for S {
+    fn add(self, a: Int, b: Int) -> Int {
+        return a + b;
+    }
+}
+
+fn make<T: Add<Int>>(x: T) -> () -> Int {
+    return () -> Int {
+        return x.add(a: 3);
+    };
+}
+
+fn main() -> Int {
+    let f = make(
+        S {
+        },
+    );
+    return f();
+}

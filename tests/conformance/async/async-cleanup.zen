@@ -1,0 +1,11 @@
+native fn record(n: Int) -> Unit;
+
+async fn cleanup(n: Int) -> Unit {
+    record(n);
+}
+
+async fn main() -> Unit {
+    defer await cleanup(3);
+    await cleanup(1);
+    defer await cleanup(2);
+}

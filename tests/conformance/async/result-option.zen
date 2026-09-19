@@ -1,0 +1,50 @@
+async fn good() -> Result<Int, String> {
+    return .ok(20);
+}
+
+async fn bad() -> Result<Int, String> {
+    return .err("bad");
+}
+
+async fn absent() -> Option<Int> {
+    return .none;
+}
+
+async fn some() -> Option<Int> {
+    return .some(22);
+}
+
+async fn result() -> Result<Int, String> {
+    let n = await bad()?;
+    return .ok(n);
+}
+
+async fn option() -> Option<Int> {
+    let n = (await absent())?;
+    return .some(n);
+}
+
+async fn success() -> Result<Int, String> {
+    let n = await good()?;
+    return .ok(n);
+}
+
+async fn main() -> Int {
+    let a = match await result() {
+        .ok(n) => 0;
+        .err(e) => 1;
+    };
+    let b = match await option() {
+        .some(n) => 0;
+        .none => 2;
+    };
+    let c = match await success() {
+        .ok(n) => n;
+        .err(e) => 0;
+    };
+    let d = match await some() {
+        .some(n) => n;
+        .none => 0;
+    };
+    return a + b + c + d;
+}

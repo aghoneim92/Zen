@@ -1,0 +1,25 @@
+native fn record(n: Int) -> Unit;
+
+async fn pause() -> Unit {
+}
+
+async fn main() -> Unit {
+    var i = 0;
+    while i < 3 {
+        i = i + 1;
+        defer record(i);
+        await pause();
+        if i == 1 {
+            continue;
+        }
+        break;
+    }
+    for n in [3, 4, 5] {
+        defer record(n);
+        await pause();
+        if n == 3 {
+            continue;
+        }
+        break;
+    }
+}

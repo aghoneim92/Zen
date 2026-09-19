@@ -163,3 +163,97 @@ fn formatter_stdin() {
         assert_eq!(output.stderr.is_empty(), code == 0);
     }
 }
+
+#[test]
+fn reference_run_pipeline_and_exit_behavior() {
+    let dir = std::env::temp_dir().join(format!("zen-run-cli-{}", std::process::id()));
+    fs::create_dir_all(dir.join("src")).unwrap();
+    let entry = dir.join("src/entry.zen");
+    fs::write(
+        dir.join("src/library.zen"),
+        "public fn value() -> Int { return 42; } public fn main() -> Unit {}",
+    )
+    .unwrap();
+    fs::write(
+        &entry,
+        "import library.value; fn main() -> Int { return value(); }",
+    )
+    .unwrap();
+    let result = binary().arg("run").arg(&entry).output().unwrap();
+    assert!(
+        result.status.success(),
+        "{}",
+        String::from_utf8_lossy(&result.stderr)
+    );
+    assert!(result.stdout.is_empty());
+    for source in [
+        "fn main() -> Bool { return false; }",
+        "fn main() -> String { return \"zen\"; }",
+        "fn main() -> Unit {}",
+        "async fn main() -> Unit {}",
+        "async fn answer() -> Int { return 42; } async fn main() -> Int { return await answer(); }",
+        "async fn main() -> Bool { return false; }",
+        "async fn main() -> String { return \"zen\"; }",
+    ] {
+        fs::write(&entry, source).unwrap();
+        assert!(
+            binary()
+                .arg("run")
+                .arg(&entry)
+                .output()
+                .unwrap()
+                .status
+                .success()
+        );
+    }
+    for source in ["fn main() -> Int { return true; }", "fn main( {"] {
+        fs::write(&entry, source).unwrap();
+        let check = binary().arg("check").arg(&entry).output().unwrap();
+        let run = binary().arg("run").arg(&entry).output().unwrap();
+        assert_eq!(run.status.code(), Some(1));
+        assert_eq!(check.stderr, run.stderr);
+    }
+    for (source, expected) in [
+        (
+            "import library.value; fn other() -> Int { return value(); }",
+            "no main",
+        ),
+        ("fn main(x: Int) -> Unit {}", "no parameters"),
+        (
+            "native fn missing() -> Unit; fn main() -> Unit { missing(); }",
+            "no reference-interpreter implementation",
+        ),
+        (
+            "native async fn missing() -> Unit; async fn main() -> Unit { await missing(); }",
+            "no reference-interpreter implementation",
+        ),
+    ] {
+        fs::write(&entry, source).unwrap();
+        let run = binary().arg("run").arg(&entry).output().unwrap();
+        assert_eq!(run.status.code(), Some(1));
+        assert!(
+            String::from_utf8_lossy(&run.stderr).contains(expected),
+            "{}",
+            String::from_utf8_lossy(&run.stderr)
+        );
+    }
+    assert_eq!(binary().arg("run").output().unwrap().status.code(), Some(2));
+    assert!(
+        binary()
+            .args(["run", "--help"])
+            .output()
+            .unwrap()
+            .status
+            .success()
+    );
+    assert_eq!(
+        binary()
+            .args(["run", "/not/a/program.zen"])
+            .output()
+            .unwrap()
+            .status
+            .code(),
+        Some(1)
+    );
+    fs::remove_dir_all(dir).unwrap();
+}

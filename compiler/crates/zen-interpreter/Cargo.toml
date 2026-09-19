@@ -1,0 +1,15 @@
+[package]
+name = "zen-interpreter"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+zen-hir = { path = "../zen-hir" }
+zen-diagnostics.workspace = true
+num-bigint = "0.4"
+stacker = "0.1"
+
+[dev-dependencies]
+zen-syntax.workspace = true
+zen-semantics.workspace = true

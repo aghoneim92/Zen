@@ -1,0 +1,15 @@
+async fn first() -> Int {
+    return 42;
+}
+
+async fn second() -> Int {
+    return await first() + 1;
+}
+
+async fn third() -> Int {
+    return await second();
+}
+
+async fn main() -> Int {
+    return await third();
+}

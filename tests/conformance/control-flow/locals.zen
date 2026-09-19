@@ -1,0 +1,17 @@
+fn main() -> Int {
+    var x = 1;
+    let y = {
+        let n = 3;
+        x = x + n;
+        n + 1
+    };
+    let z = if x == 4 {
+        y
+    } else {
+        100
+    };
+    if false {
+        x = 200;
+    }
+    return x + y + z;
+}

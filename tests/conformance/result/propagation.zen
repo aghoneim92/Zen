@@ -1,0 +1,8 @@
+fn read(x: Result<Int, String>) -> Result<String, String> {
+    let n = x?;
+    return .ok("yes");
+}
+
+fn main() -> Bool {
+    return read(.ok(1)) == .ok("yes") && read(.err("no")) == .err("no");
+}

@@ -1,0 +1,42 @@
+fn combine(a: Int, b: Int, c: Int = a + b) -> Int {
+    return a * 100 + b * 10 + c;
+}
+
+fn pair(a: Int, b: Int) -> Int {
+    return a * 10 + b;
+}
+
+fn main() -> Bool {
+    var order = 0;
+    let direct = combine(
+        {
+            order = order * 10 + 1;
+            2
+        },
+        {
+            order = order * 10 + 2;
+            3
+        },
+    );
+    let indirect = ({
+        order = order * 10 + 3;
+        pair
+    })(
+        {
+            order = order * 10 + 4;
+            4
+        },
+        {
+            order = order * 10 + 5;
+            5
+        },
+    );
+    let chosen = if true {
+        order = order * 10 + 6;
+        6
+    } else {
+        order = 999;
+        0
+    };
+    return order == 123456 && direct == 235 && indirect == 45 && chosen == 6;
+}

@@ -1,0 +1,10 @@
+async fn count(n: Int) -> Int {
+    if n == 0 {
+        return 0;
+    }
+    return await count(n - 1) + 1;
+}
+
+async fn main() -> Int {
+    return await count(1000);
+}

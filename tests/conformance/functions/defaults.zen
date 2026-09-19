@@ -1,0 +1,9 @@
+const base: Int = 10;
+
+fn total(a: Int = base, b: Int = a + 1, c: Int = b + 2) -> Int {
+    return a + b + c;
+}
+
+fn main() -> Bool {
+    return total() == 34 && total(1) == 7 && total(c: 100, a: 2) == 105 && total(b: 20) == 52;
+}

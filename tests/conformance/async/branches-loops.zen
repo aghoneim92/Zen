@@ -1,0 +1,39 @@
+async fn step(n: Int) -> Int {
+    return n;
+}
+
+async fn main() -> Int {
+    var sum = 0;
+    var i = 0;
+    while i < 4 {
+        i = i + 1;
+        let n = await step(i);
+        if n == 2 {
+            continue;
+        }
+        if n == 4 {
+            break;
+        }
+        sum = sum + n;
+    }
+    for value in [10, 20, 30, 40] {
+        let n = await step(value);
+        if n == 20 {
+            continue;
+        }
+        if n == 40 {
+            break;
+        }
+        sum = sum + n;
+    }
+    let branch = if sum == 44 {
+        await step(5)
+    } else {
+        await step(100)
+    };
+    let selected = match await step(1) {
+        1 => await step(6);
+        _ => 100;
+    };
+    return sum + branch + selected;
+}

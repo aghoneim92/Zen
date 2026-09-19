@@ -1,0 +1,10 @@
+fn main() -> Int {
+    var n = 1;
+    defer {
+        n = 2;
+    };
+    return n;
+    defer {
+        n = 3;
+    };
+}

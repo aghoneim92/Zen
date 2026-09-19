@@ -1,0 +1,42 @@
+fn main() -> Int {
+    var order = 0;
+    {
+        defer {
+            order = order * 10 + 1;
+        };
+        defer {
+            order = order * 10 + 2;
+        };
+        {
+            defer {
+                order = order * 10 + 3;
+            };
+        }
+        if false {
+            defer {
+                order = 999;
+            };
+        }
+    }
+    var index = 0;
+    while index < 2 {
+        defer {
+            order = order * 10 + 4;
+        };
+        index = index + 1;
+        if index == 1 {
+            continue;
+        }
+        break;
+    }
+    for item in [1, 2] {
+        defer {
+            order = order * 10 + 5;
+        };
+        if item == 1 {
+            continue;
+        }
+        break;
+    }
+    return order;
+}

@@ -1,0 +1,41 @@
+struct Holder {
+    task: Task<Int>;
+}
+
+enum Wrapped {
+    pending(Task<Int>);
+}
+
+async fn answer(value: Int) -> Int {
+    return value;
+}
+
+fn prepare() -> Task<Int> {
+    return answer(10);
+}
+
+fn transport(task: Task<Int>) -> Task<Int> {
+    return task;
+}
+
+async fn main() -> Int {
+    let a = prepare();
+    let b = Holder {
+        task: answer(20),
+    };
+    let c: Wrapped = .pending(answer(30));
+    let items = [answer(40)];
+    let capture = () -> Task<Int> {
+        return a;
+    };
+    let first = await transport(capture());
+    let second = await b.task;
+    let third = match c {
+        .pending(task) => await task;
+    };
+    let fourth = match items.first() {
+        .some(task) => await task;
+        .none => 0;
+    };
+    return first + second + third + fourth;
+}

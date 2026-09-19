@@ -119,6 +119,8 @@ struct Context {
     asynchronous: bool,
     loops: usize,
     closure: usize,
+    /// Loop depth at the innermost deferred expression; exits may not cross it.
+    defer_boundary: Option<usize>,
 }
 struct Checker {
     resolved: resolved::ResolvedProgram,

@@ -4,15 +4,18 @@ This file applies to the entire repository. Keep it accurate as the project evol
 
 ## Project context
 
-Zen is a statically typed language and planned cross-platform application platform
-focused on predictable semantics and reliable generated code. The repository
-currently implements a compiler frontend and typed HIR, a canonical formatter, a language
-server, and Zed integration. It does not yet generate or execute programs. Do not
-describe planned runtime, platform, or standard-library features as implemented.
+Zen is a statically typed language and planned cross-platform application
+platform focused on predictable semantics and reliable generated code. The
+repository currently implements a compiler frontend, typed HIR, a reference
+interpreter with deterministic async tasks, a canonical formatter, a language
+server, and Zed integration. Production code generation and platform runtimes
+remain future work. Do not describe planned runtime, platform, or
+standard-library features as implemented.
 
 The compiler is a Rust 2024 workspace using the stable toolchain configured in
-`rust-toolchain.toml`. The core frontend uses the standard library; the LSP uses
-Tokio and tower-lsp-server. Preserve the lightweight core dependency boundary.
+`rust-toolchain.toml`. The core frontend uses the standard library; the
+interpreter uses num-bigint and stacker; the LSP uses Tokio and
+tower-lsp-server. Preserve the lightweight core dependency boundary.
 
 ## Read these first
 
@@ -27,6 +30,8 @@ Tokio and tower-lsp-server. Preserve the lightweight core dependency boundary.
   editor behavior, and regression-test conventions.
 - [Typed HIR](docs/hir.md): representation contract, lowering API, semantic identities,
   golden tests, and boundaries for future compiler stages.
+- [Reference interpreter](docs/interpreter.md): execution model, host boundary,
+  entry points, errors, and [conformance fixtures](tests/conformance/README.md).
 - [Zed integration](editors/zed/README.md): installation, capabilities, architecture,
   validation, and troubleshooting.
 - [Tree-sitter grammar](tooling/tree-sitter-zen/README.md): syntax tooling and checks.
@@ -44,9 +49,11 @@ follow-up in the implementation notes using their existing format.
 | `compiler/crates/zen-syntax/` | Lexer, parser, AST, recovery, trivia, and syntax-role metadata. |
 | `compiler/crates/zen-semantics/` | Resolution, nominal types, type checking, and shared IDE analysis. `src/checker/` divides checking by concern. |
 | `compiler/crates/zen-hir/` | Owned typed/resolved high-level IR, lowering, deterministic dumps, and fixture tests for future backends. |
+| `compiler/crates/zen-interpreter/` | HIR evaluator, deterministic executor, task continuations, values, frames/scopes, and execution tests. |
 | `compiler/crates/zen-format/` | Canonical formatting over compiler syntax, document rendering, and formatter fixtures/property tests. |
 | `compiler/crates/zen-lsp/` | LSP transport, workspace snapshots, position conversion, and editor features backed by compiler analysis. |
-| `compiler/crates/zen-cli/` | The `zen` binary: `check`, `fmt`, and `lsp`, plus CLI/LSP integration tests. |
+| `compiler/crates/zen-cli/` | The `zen` binary: `check`, `run`, `fmt`, and `lsp`, plus CLI/LSP integration tests. |
+| `tests/conformance/` | Shared execution programs, expected return values, and optional host observations. |
 | `tests/fixtures/valid/` | Programs the frontend must accept. |
 | `tests/fixtures/invalid/` | Programs it must reject, expected diagnostic codes, and selected `.stderr` snapshots. |
 | `tooling/tree-sitter-zen/` | Syntax-only editor grammar, corpus tests, and grammar/query validation. |
@@ -129,6 +136,15 @@ Update deliberately with `ZEN_UPDATE_HIR=1 cargo test -p zen-hir --test lowering
 golden_dumps` and inspect the snapshots. Lowering consumes error-free semantic
 data; keep resolution decisions in `zen-semantics`, and runtime/layout choices
 out of HIR.
+
+Interpreter execution consumes HIR only; never execute syntax or redo resolution.
+Execution fixtures use `.zen` / `.expected` pairs under `tests/conformance`; optional
+`.host` and `.events` files declare test-host bindings and observations. Keep native
+bridges keyed by semantic IDs. Run `cargo test -p zen-interpreter` for execution
+changes and preserve evaluation order, value captures, and lexical defer cleanup.
+Task continuations live only in the interpreter, not HIR. Scheduling and cancellation
+policy tests belong in executor unit tests; cross-backend async fixtures must not
+prescribe unspecified task start timing, repeated-await or ownership policy.
 
 ## Keep documentation current as you work
 

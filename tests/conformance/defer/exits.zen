@@ -1,0 +1,56 @@
+native fn record(value: Int) -> Unit;
+
+fn returned() -> Int {
+    var n = 1;
+    defer record(n);
+    defer {
+        n = 2;
+        record(3);
+    };
+    {
+        defer record(4);
+        return {
+            record(5);
+            n
+        };
+    }
+    defer record(999);
+}
+
+fn option(value: Option<Int>) -> Option<String> {
+    defer record(10);
+    {
+        defer record(11);
+        let n = value?;
+        record(n);
+    }
+    return .some("ok");
+}
+
+fn result(value: Result<Int, String>) -> Result<String, String> {
+    defer record(20);
+    {
+        defer record(21);
+        let n = value?;
+        record(n);
+    }
+    return .ok("ok");
+}
+
+fn main() -> Bool {
+    let first = returned();
+    let missing = option(.none);
+    let present = option(.some(12));
+    let failed = result(.err("error"));
+    let success = result(.ok(22));
+    return first
+        == 1
+        && missing
+        == .none
+        && present
+        == .some("ok")
+        && failed
+        == .err("error")
+        && success
+        == .ok("ok");
+}

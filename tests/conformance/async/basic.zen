@@ -1,0 +1,7 @@
+async fn answer() -> Int {
+    return 42;
+}
+
+async fn main() -> Int {
+    return await answer();
+}

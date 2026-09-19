@@ -1,0 +1,16 @@
+enum Tree {
+    empty;
+    leaf(Int);
+    pair(Option<Int>, Result<Int, String>);
+}
+
+fn main() -> Bool {
+    let value = Tree.pair(.some(3), .ok(4));
+    let matched = match value {
+        .pair(.some(x), .ok(y)) => x + y;
+        .pair(_, _) => 0;
+        .leaf(x) => x;
+        .empty => -1;
+    };
+    return matched == 7 && Tree.empty == Tree.empty && Tree.leaf(1) != Tree.leaf(2);
+}

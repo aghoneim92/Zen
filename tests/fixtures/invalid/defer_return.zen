@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0042
+fn f() -> Unit { defer { let local = () -> Unit { return; }; return; }; }

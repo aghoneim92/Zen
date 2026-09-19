@@ -1,0 +1,38 @@
+native fn record(n: Int) -> Unit;
+
+async fn pause(n: Int) -> Unit {
+    record(n);
+}
+
+async fn early() -> Unit {
+    defer record(8);
+    await pause(7);
+    return;
+}
+
+async fn fail() -> Result<Int, String> {
+    return .err("bad");
+}
+
+async fn propagate() -> Result<Int, String> {
+    defer record(10);
+    let n = await fail()?;
+    record(99);
+    return .ok(n);
+}
+
+async fn main() -> Unit {
+    defer record(12);
+    {
+        defer record(6);
+        defer record(5);
+        await pause(1);
+        defer record(4);
+        record(2);
+        await pause(3);
+    }
+    await early();
+    record(9);
+    let result = await propagate();
+    record(11);
+}

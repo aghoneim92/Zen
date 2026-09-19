@@ -1,0 +1,26 @@
+fn main() -> Bool {
+    let empty: List<Int> = [];
+    let first = empty.append(1);
+    let second = first.append(2);
+    let get: (Int) -> Option<Int> = second.get;
+    var total = 0;
+    for n in second {
+        total = total + n;
+    }
+    return empty
+        .first()
+        == .none
+        && first
+        .get(1)
+        == .none
+        && get(1)
+        == .some(2)
+        && second
+        .get(-1)
+        == .none
+        && second
+        .get(99999999999999999999999999999999999)
+        == .none
+        && total
+        == 3;
+}

@@ -1,0 +1,25 @@
+struct Inner {
+    n: Int;
+}
+
+struct Outer {
+    inner: Inner;
+    label: String;
+}
+
+fn main() -> Bool {
+    let first = Outer {
+        label: "first",
+        inner: Inner {
+            n: 1,
+        },
+    };
+    let copy = first;
+    let changed = first with {
+        inner: first.inner with {
+            n: 2,
+        },
+        label: "next",
+    };
+    return first == copy && first.inner.n == 1 && changed.inner.n == 2 && first != changed;
+}

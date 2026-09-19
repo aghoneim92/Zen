@@ -1,0 +1,34 @@
+interface Read {
+    fn read(self) -> Int;
+}
+
+struct Item {
+    value: Int;
+}
+
+impl Read for Item {
+    fn read(self) -> Int {
+        return self.value;
+    }
+}
+
+async fn identity<T>(value: T) -> T {
+    return value;
+}
+
+async fn total<T: Read>(value: T) -> Int {
+    let a = value.read();
+    let held = await identity(value);
+    let f = () -> Int {
+        return held.read();
+    };
+    return a + f();
+}
+
+async fn main() -> Int {
+    return await total(
+        Item {
+            value: 21,
+        },
+    );
+}

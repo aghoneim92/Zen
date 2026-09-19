@@ -1,0 +1,14 @@
+native fn record(n: Int) -> Unit;
+
+async fn check(n: Int) -> Bool {
+    record(n);
+    return true;
+}
+
+async fn main() -> Bool {
+    let a = false && await check(1);
+    let b = true || await check(2);
+    let c = true && await check(3);
+    let d = false || await check(4);
+    return !a && b && c && d;
+}

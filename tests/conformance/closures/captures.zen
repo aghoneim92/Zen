@@ -1,0 +1,31 @@
+fn build(a: Int) -> () -> () -> Int {
+    let b = 2;
+    return () -> () -> Int {
+        let c = 3;
+        return () -> Int {
+            return a + b + c;
+        };
+    };
+}
+
+fn apply(f: (Int) -> Int, x: Int) -> Int {
+    return f(x);
+}
+
+fn twice(x: Int) -> Int {
+    return x * 2;
+}
+
+fn main() -> Int {
+    var n = 5;
+    let snapshot = () -> Int {
+        return n;
+    };
+    n = 100;
+    let outer = build(10);
+    let inner = outer();
+    let noCapture = () -> Int {
+        return 1;
+    };
+    return snapshot() + inner() + apply(twice, noCapture());
+}

@@ -1,0 +1,23 @@
+fn main() -> Int {
+    var count = 0;
+    let a = match {
+        count = count + 1;
+        5
+    } {
+        5 => 10;
+        _ => 0;
+    };
+    let b = match "zen" {
+        "zen" => 20;
+        _ => 0;
+    };
+    let c = match 'λ' {
+        'λ' => 30;
+        _ => 0;
+    };
+    let d = match true {
+        true => 40;
+        false => 0;
+    };
+    return a + b + c + d + count;
+}

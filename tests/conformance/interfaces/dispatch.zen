@@ -1,0 +1,49 @@
+interface Convert<T> {
+    fn convert(self) -> T;
+}
+
+struct S {
+    n: Int;
+}
+
+struct Other {
+    n: Int;
+}
+
+impl Convert<Int> for S {
+    fn convert(self) -> Int {
+        return self.n;
+    }
+}
+
+impl Convert<Int> for Other {
+    fn convert(self) -> Int {
+        return self.n * 2;
+    }
+}
+
+impl S {
+    fn add<T>(self, value: T) -> T {
+        return value;
+    }
+}
+
+fn generic<T: Convert<Int>>(x: T) -> Int {
+    let method: () -> Int = x.convert;
+    return x.convert() + method();
+}
+
+fn forward<T: Convert<Int>>(x: T) -> Int {
+    return generic(x);
+}
+
+fn main() -> Int {
+    let a = S {
+        n: 3,
+    };
+    let b = Other {
+        n: 5,
+    };
+    let method: (Int) -> Int = a.add;
+    return a.convert() + forward(a) + generic(b) + method(a.add(4));
+}

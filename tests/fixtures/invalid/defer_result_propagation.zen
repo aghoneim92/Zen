@@ -1,0 +1,2 @@
+// expect: ZEN-TYPE-0042
+fn f(value: Result<Unit, String>) -> Result<Unit, String> { defer { value?; }; return .ok(unit); }

@@ -1,0 +1,21 @@
+const first: Int = second + 1;
+
+const second: Int = 999999999999999999999999999999;
+
+const values: List<Int> = [first, second];
+
+struct S {
+    n: Int;
+}
+
+const item: S = S {
+    n: first,
+};
+
+fn read() -> Int {
+    return first;
+}
+
+fn main() -> Bool {
+    return read() == item.n && values.first() == Option<Int>.some(first);
+}

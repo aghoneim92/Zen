@@ -38,10 +38,12 @@ protocol is invented. Lambdas have explicit parameters and typed value captures,
 including outer locals needed to create nested lambdas. No closure environment
 layout is chosen.
 
-The milestone does not execute constants, defaults or programs. MIR control flow,
-match decision trees, defer expansion, async state machines, closure conversion,
-monomorphization, optimization, memory layout, linking and native ABI/runtime
-behavior belong to later stages.
+HIR itself does not execute constants, defaults or programs. The [reference
+interpreter](interpreter.md) executes synchronous and async HIR while retaining
+suspension state internally. MIR control flow, match decision trees, defer
+expansion, async state machines, closure conversion, monomorphization,
+optimization, memory layout, linking and production native ABI/runtime behavior
+belong to later stages.
 
 ## API and ownership
 
@@ -90,11 +92,13 @@ remain in `Type::Nominal`. Applying known substitutions is not type inference.
 An omitted default is a parameter index in `Call.defaults`. Its one typed
 initializer remains on the declaration's `Parameter.default`. Earlier-parameter
 references use that declaration's local IDs. Defaults are not copied into callers,
-constant-folded, or evaluated here. A later executor must bind supplied argument
+constant-folded, or evaluated here. An executor must bind supplied argument
 values, apply the call's substitutions, and use declaration-context defaults for
-omitted parameters. Their precise evaluation timing is still a specification
-follow-up; HIR deliberately retains this distinction rather than selecting a new
-execution rule. Interface requirement defaults belong to the requirement's
+omitted parameters. The reference interpreter evaluates supplied expressions
+first in source order,
+then omitted defaults in declaration order. This execution decision is recorded
+in the implementation notes; HIR continues to retain the distinction explicitly.
+Interface requirement defaults belong to the requirement's
 signature and its instantiated interface context.
 
 ## Literals and divergence

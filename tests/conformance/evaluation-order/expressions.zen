@@ -1,0 +1,92 @@
+struct S {
+    a: Int;
+    b: Int;
+}
+
+enum Pair {
+    pair(Int, Int);
+}
+
+impl S {
+    fn add(self, value: Int) -> Int {
+        return self.a + value;
+    }
+}
+
+fn combine(a: Int, b: Int, c: Int = a + b) -> Int {
+    return a * 100 + b * 10 + c;
+}
+
+fn main() -> Bool {
+    var order = 0;
+    let binary = {
+        order = order * 10 + 1;
+        2
+    } + {
+        order = order * 10 + 2;
+        3
+    };
+    let named = combine(
+        b: {
+            order = order * 10 + 3;
+            2
+        },
+        a: {
+            order = order * 10 + 4;
+            1
+        },
+    );
+    let list = [
+        {
+            order = order * 10 + 5;
+            1
+        },
+        {
+            order = order * 10 + 6;
+            2
+        },
+    ];
+    let s = S {
+        b: {
+            order = order * 10 + 7;
+            2
+        },
+        a: {
+            order = order * 10 + 8;
+            1
+        },
+    };
+    let pair = Pair.pair(
+        {
+            order = order * 10 + 9;
+            1
+        },
+        {
+            order = order * 10;
+            2
+        },
+    );
+    let result = ({
+        order = order * 10 + 1;
+        s
+    }).add(
+        {
+            order = order * 10 + 2;
+            3
+        },
+    );
+    let updated = {
+        order = order * 10 + 3;
+        s
+    } with {
+        b: {
+            order = order * 10 + 4;
+            4
+        },
+        a: {
+            order = order * 10 + 5;
+            5
+        },
+    };
+    return order == 123456789012345 && binary == 5 && named == 123 && result == 4 && updated.a == 5;
+}

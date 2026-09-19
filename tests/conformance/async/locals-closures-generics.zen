@@ -1,0 +1,29 @@
+async fn identity<T>(value: T) -> T {
+    return value;
+}
+
+struct Box<T> {
+    value: T;
+}
+
+async fn retained<T>(value: T) -> T {
+    let held = Box<T> {
+        value: value,
+    };
+    let capture = () -> T {
+        return held.value;
+    };
+    var count = 1;
+    count = count + 1;
+    let ignored = await identity(5);
+    count = count + ignored;
+    let f = async () -> T {
+        let n = await identity(count);
+        return capture();
+    };
+    return await f();
+}
+
+async fn main() -> String {
+    return await retained("kept");
+}

@@ -11,9 +11,14 @@ fn main() -> ExitCode {
         zen_lsp::run();
         return ExitCode::SUCCESS;
     }
-    if args.is_empty() || args == ["--help"] || args == ["-h"] || args == ["check", "--help"] {
+    if args.is_empty()
+        || args == ["--help"]
+        || args == ["-h"]
+        || args == ["check", "--help"]
+        || args == ["run", "--help"]
+    {
         println!(
-            "Zen compiler frontend\n\nUsage: zen check <file>\n       zen fmt [--check] <path>...\n       zen fmt -\n       zen lsp\n       zen --help\n       zen --version"
+            "Zen compiler and reference interpreter\n\nUsage: zen check <file>\n       zen run <file>\n       zen fmt [--check] <path>...\n       zen fmt -\n       zen lsp\n       zen --help\n       zen --version"
         );
         return ExitCode::SUCCESS;
     }
@@ -21,8 +26,8 @@ fn main() -> ExitCode {
         println!("zen {}", env!("CARGO_PKG_VERSION"));
         return ExitCode::SUCCESS;
     }
-    if args.len() != 2 || args[0] != "check" {
-        eprintln!("error: expected `zen check <file>`; see --help");
+    if args.len() != 2 || !matches!(args[0].as_str(), "check" | "run") {
+        eprintln!("error: expected `zen check <file>` or `zen run <file>`; see --help");
         return ExitCode::from(2);
     }
     let path = match std::fs::canonicalize(&args[1]) {
@@ -41,8 +46,26 @@ fn main() -> ExitCode {
         visited: BTreeSet::new(),
     };
     loader.load(path, None);
+    let entry_module = loader.modules.first().map(|m| m.file);
     if loader.diagnostics.is_empty() {
         let result = zen_semantics::check(loader.modules);
+        if result.diagnostics.is_empty() && args[0] == "run" {
+            let hir = match zen_hir::lower_program(&result) {
+                Ok(hir) => hir,
+                Err(error) => {
+                    eprintln!("internal HIR lowering error: {error}");
+                    return ExitCode::from(1);
+                }
+            };
+            let mut interpreter = zen_interpreter::Interpreter::new(&hir, zen_interpreter::NoHost);
+            match interpreter.run_main(entry_module.expect("loaded entry module")) {
+                Ok(_) => return ExitCode::SUCCESS,
+                Err(error) => {
+                    eprintln!("{}", error.render(&loader.sources));
+                    return ExitCode::from(1);
+                }
+            }
+        }
         loader.diagnostics.extend(result.diagnostics);
     }
     for d in &loader.diagnostics {

@@ -1,20 +1,25 @@
 # Zen
 
-Zen is a statically typed language and planned cross-platform application platform
-focused on predictable semantics and reliable generated code. The repository
-currently provides a compiler frontend, typed high-level intermediate
-representation (HIR), a canonical formatter, a language server, and Zed
-integration. Zen does not yet generate or execute programs.
+Zen is a statically typed language and planned cross-platform application
+platform focused on predictable semantics and reliable generated code. The
+repository currently provides a compiler frontend, typed high-level intermediate
+representation (HIR), a reference interpreter with deterministic async tasks, a
+canonical formatter, a language server, and Zed integration. Production code
+generation and the application platform remain future work.
 
 ## Getting started
 
 Use stable Rust with the `rustfmt` and `clippy` components; the repository's
-`rust-toolchain.toml` configures these. Run commands from the repository root:
+`rust-toolchain.toml` configures these. A native C build toolchain is required by
+the interpreter’s stack-growth dependency (for example, Xcode Command Line Tools
+on macOS). Run commands from the repository root:
 
 ```sh
 cargo build --workspace
 cargo run -p zen-cli -- check tests/fixtures/valid/interfaces.zen
 cargo run -p zen-cli -- check examples/editor/src/main.zen
+cargo run -p zen-cli -- run tests/conformance/functions/calls.zen
+cargo run -p zen-cli -- run tests/conformance/async/basic.zen
 cargo run -p zen-cli -- --help
 ```
 
@@ -31,6 +36,7 @@ Alternatively, use `cargo run -p zen-cli --` or `target/debug/zen` without insta
 
 | Command | Behavior |
 | --- | --- |
+| `zen run <file>` | Check, lower to HIR, and execute the entry file’s `main`. |
 | `zen check <file>` | Parse, resolve imports, and type-check a program. |
 | `zen fmt <path>...` | Format files or recursively format directories. |
 | `zen fmt --check <path>...` | Check formatting without rewriting files. |
@@ -43,6 +49,11 @@ command usage. Diagnostics carry stable codes, source ranges, and structured typ
 information in the compiler API. Imports use the nearest ancestor named `src` as
 the source root, or the input file's directory otherwise. There is no package
 manifest or dependency registry yet.
+
+`zen run` uses a parameterless, non-generic `main` returning `Unit`, `Int`, `Bool`
+or `String`. Success exits 0; the returned value is neither printed nor used as an
+exit code. Async `main` is driven to completion; native calls are unbound.
+See the [reference interpreter guide](docs/interpreter.md) for APIs and limits.
 
 Formatting is deterministic and shared by the CLI and language server. Syntax
 errors prevent formatting that file; type errors do not. Avoid in-place formatting
@@ -59,7 +70,8 @@ prepare and install the development extension. The cross-file
 ## Repository layout
 
 The compiler is a Rust 2024 workspace. The core frontend uses the Rust standard
-library; the LSP uses tower-lsp-server and Tokio.
+library; the interpreter uses num-bigint and stacker, and the LSP uses
+tower-lsp-server and Tokio.
 
 | Path | Purpose |
 | --- | --- |
@@ -67,9 +79,11 @@ library; the LSP uses tower-lsp-server and Tokio.
 | `compiler/crates/zen-syntax/` | Lexer, parser, AST, recovery, and syntax metadata. |
 | `compiler/crates/zen-semantics/` | Resolution, type checking, and shared IDE analysis. |
 | `compiler/crates/zen-hir/` | Owned typed/resolved HIR, lowering, and deterministic dumps; see the [HIR contract](docs/hir.md). |
+| `compiler/crates/zen-interpreter/` | HIR execution, deterministic task executor, values, host bridge, and execution tests. |
 | `compiler/crates/zen-format/` | Canonical formatter and its regression fixtures. |
 | `compiler/crates/zen-lsp/` | Language server, workspace snapshots, and editor features. |
 | `compiler/crates/zen-cli/` | The `zen` command and CLI/LSP integration tests. |
+| `tests/conformance/` | Backend-neutral execution source/result fixtures. |
 | `tests/fixtures/` | Valid and invalid frontend programs and selected diagnostic snapshots. |
 | `tooling/tree-sitter-zen/` | Syntax-only grammar and corpus/query validation. |
 | `editors/zed/` | Separate extension crate, language queries, and development setup. |
@@ -77,10 +91,12 @@ library; the LSP uses tower-lsp-server and Tokio.
 | `docs/` | Language design, implementation decisions, and feature guides. |
 
 `zen_hir::lower_program` converts successfully checked programs into owned, typed,
-resolved HIR for future backends. It preserves source order, semantic identities,
+resolved HIR for the reference interpreter and future backends. It preserves
+source order, semantic identities,
 resolved calls, generic substitutions, and explicit closure captures.
-Code generation, execution, runtime/native ABI support, and the application platform
-remain future work; draft specifications describe more than is implemented today.
+Synchronous and async reference execution are implemented; production code generation,
+native ABI support, and the application platform remain future work; draft
+specifications describe more than is implemented today.
 
 ## Development and validation
 
@@ -109,6 +125,8 @@ extension build check, which is outside the root Cargo workspace.
 - [Implementation notes](docs/implementation-notes.md): decisions, ambiguities,
   compiler APIs, source-root rules, and current frontend limits.
 - [Typed HIR](docs/hir.md): representation contract and boundaries for lowering work.
+- [Reference interpreter](docs/interpreter.md): execution semantics, APIs, limitations,
+  and [conformance fixtures](tests/conformance/README.md).
 - [Canonical formatting](docs/formatting.md): style, APIs, and regression testing.
 - [Zed integration](editors/zed/README.md) and
   [Tree-sitter grammar](tooling/tree-sitter-zen/README.md): editor setup and checks.

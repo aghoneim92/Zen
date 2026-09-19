@@ -1,0 +1,32 @@
+struct Counter {
+    value: Int;
+}
+
+impl Counter {
+    async fn add(self, n: Int = 2) -> Int {
+        let value = await identity(self.value);
+        return value + n;
+    }
+}
+
+async fn identity<T>(value: T) -> T {
+    return value;
+}
+
+async fn defaults(a: Int, b: Int = a) -> Int {
+    return await identity(a + b);
+}
+
+async fn main() -> Int {
+    let counter = Counter {
+        value: 10,
+    };
+    let method = counter.add;
+    let a = await method(3);
+    let b = await counter.add();
+    let c = await defaults(4);
+    var n = 1;
+    n = n + await identity(2);
+    n = n + 1;
+    return a + b + c + n;
+}

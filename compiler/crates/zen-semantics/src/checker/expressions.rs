@@ -383,6 +383,7 @@ impl Checker {
                 let saved = self.ctx.clone();
                 self.ctx.closure += 1;
                 self.ctx.loops = 0;
+                self.ctx.defer_boundary = None;
                 self.ctx.asynchronous = *asynchronous;
                 self.ctx.locals.push(BTreeMap::new());
                 let ret = if let Some(r) = result {
@@ -525,6 +526,13 @@ impl Checker {
                 false
             }
             StmtKind::Return(value) => {
+                if self.ctx.defer_boundary.is_some() {
+                    self.error(
+                        "ZEN-TYPE-0042",
+                        s.span,
+                        "return cannot leave a deferred expression",
+                    );
+                }
                 if let Some(r) = self.ctx.result.clone() {
                     if let Some(v) = value {
                         self.expr(v, Some(&r));
@@ -538,10 +546,24 @@ impl Checker {
             }
             StmtKind::Expr(e) => self.expr_usage(e, None, false) == Type::Never,
             StmtKind::Defer(e) => {
+                let saved = self.ctx.defer_boundary;
+                self.ctx.defer_boundary = Some(self.ctx.loops);
                 self.expr(e, Some(&Type::Unit));
+                self.ctx.defer_boundary = saved;
                 false
             }
             StmtKind::Break | StmtKind::Continue => {
+                if self
+                    .ctx
+                    .defer_boundary
+                    .is_some_and(|depth| self.ctx.loops <= depth)
+                {
+                    self.error(
+                        "ZEN-TYPE-0042",
+                        s.span,
+                        "loop exit cannot leave a deferred expression",
+                    );
+                }
                 if self.ctx.loops == 0 {
                     self.error(
                         "ZEN-TYPE-0015",
@@ -593,6 +615,13 @@ impl Checker {
                 _ => false,
             };
             if (*id == RESULT || *id == OPTION) && valid {
+                if self.ctx.defer_boundary.is_some() {
+                    self.error(
+                        "ZEN-TYPE-0042",
+                        s,
+                        "propagation cannot leave a deferred expression",
+                    );
+                }
                 return a[0].clone();
             }
         }

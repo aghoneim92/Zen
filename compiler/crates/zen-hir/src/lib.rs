@@ -6,7 +6,10 @@ use zen_diagnostics::{FileId, Span};
 pub use zen_semantics::resolved::{
     CallTarget, FieldId, GenericParameter, Implementation, Intrinsic, Local, VariantId,
 };
-pub use zen_semantics::types::{NominalDefinition, NominalKind, ParamId, SymbolId, Type, TypeId};
+pub use zen_semantics::types::{
+    LIST, MAP, NominalDefinition, NominalKind, OPTION, ParamId, RESULT, SET, SymbolId, TASK, Type,
+    TypeId,
+};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ExprId(pub usize);

@@ -1,0 +1,24 @@
+fn main() -> Int {
+    var n = 0;
+    {
+        defer {
+            var index = 0;
+            while index < 3 {
+                index = index + 1;
+                if index == 1 {
+                    continue;
+                }
+                n = n + index;
+                break;
+            }
+            let local = () -> Option<Int> {
+                let x: Option<Int> = .some(3);
+                return .some(x?);
+            };
+            if local() == .some(3) {
+                n = n + 3;
+            }
+        };
+    }
+    return n;
+}
