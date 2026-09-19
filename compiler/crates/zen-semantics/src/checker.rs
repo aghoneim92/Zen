@@ -1,4 +1,5 @@
 use crate::analysis::*;
+use crate::resolved::{self, key};
 use crate::types::*;
 use std::collections::{BTreeMap, BTreeSet};
 use zen_diagnostics::{Diagnostic, FileId, Span, SuggestedFix};
@@ -25,6 +26,7 @@ pub struct TypedExpr {
 }
 #[derive(Debug)]
 pub struct CheckedProgram {
+    pub resolved: resolved::ResolvedProgram,
     pub modules: Vec<ModuleInput>,
     pub nominal_types: Vec<NominalDefinition>,
     pub expressions: Vec<TypedExpr>,
@@ -55,6 +57,8 @@ struct Signature {
     result: Type,
     asynchronous: bool,
     body: Option<Expr>,
+    native: bool,
+    intrinsic: Option<resolved::Intrinsic>,
 }
 impl Signature {
     fn ty(&self) -> Type {
@@ -117,6 +121,7 @@ struct Context {
     closure: usize,
 }
 struct Checker {
+    resolved: resolved::ResolvedProgram,
     ide: SemanticIndex,
     modules: Vec<ModuleInput>,
     names: Vec<Names>,
@@ -135,6 +140,7 @@ struct Checker {
 }
 pub fn check(modules: Vec<ModuleInput>) -> CheckedProgram {
     let mut c = Checker {
+        resolved: resolved::ResolvedProgram::default(),
         ide: SemanticIndex::default(),
         names: (0..modules.len()).map(|_| Names::default()).collect(),
         modules,
@@ -197,8 +203,10 @@ pub fn check(modules: Vec<ModuleInput>) -> CheckedProgram {
             },
         })
         .collect();
+    c.finish_resolved();
     c.finish_index();
     CheckedProgram {
+        resolved: c.resolved,
         ide: c.ide,
         modules: c.modules,
         nominal_types,
@@ -223,3 +231,5 @@ fn fields_for(d: &Decl) -> &[Field] {
 }
 
 mod ide;
+
+mod retention;

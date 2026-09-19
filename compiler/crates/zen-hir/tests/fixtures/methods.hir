@@ -1,0 +1,72 @@
+module Module { id: FileId(0), name: "test", functions: [SymbolId(0), SymbolId(1), SymbolId(2), SymbolId(3), SymbolId(4), SymbolId(5)], constants: [], nominals: [TypeId(6), TypeId(7)] }
+nominal NominalDefinition { id: TypeId(0), name: "Option", span: Span { file: FileId(0), start: 0, end: 0 }, module: None, public: true, parameters: [ParamId(0)], kind: Enum([SemanticVariant { name: "some", span: Span { file: FileId(0), start: 0, end: 0 }, payload: [Param(ParamId(0))] }, SemanticVariant { name: "none", span: Span { file: FileId(0), start: 0, end: 0 }, payload: [] }]) }
+nominal NominalDefinition { id: TypeId(1), name: "Result", span: Span { file: FileId(0), start: 0, end: 0 }, module: None, public: true, parameters: [ParamId(1), ParamId(2)], kind: Enum([SemanticVariant { name: "ok", span: Span { file: FileId(0), start: 0, end: 0 }, payload: [Param(ParamId(1))] }, SemanticVariant { name: "err", span: Span { file: FileId(0), start: 0, end: 0 }, payload: [Param(ParamId(2))] }]) }
+nominal NominalDefinition { id: TypeId(2), name: "Task", span: Span { file: FileId(0), start: 0, end: 0 }, module: None, public: true, parameters: [ParamId(3)], kind: Builtin }
+nominal NominalDefinition { id: TypeId(3), name: "List", span: Span { file: FileId(0), start: 0, end: 0 }, module: None, public: true, parameters: [ParamId(4)], kind: Builtin }
+nominal NominalDefinition { id: TypeId(4), name: "Map", span: Span { file: FileId(0), start: 0, end: 0 }, module: None, public: true, parameters: [ParamId(5), ParamId(6)], kind: Builtin }
+nominal NominalDefinition { id: TypeId(5), name: "Set", span: Span { file: FileId(0), start: 0, end: 0 }, module: None, public: true, parameters: [ParamId(7)], kind: Builtin }
+nominal NominalDefinition { id: TypeId(6), name: "Convert", span: Span { file: FileId(0), start: 10, end: 17 }, module: Some(FileId(0)), public: false, parameters: [ParamId(8)], kind: Interface([SymbolId(3)]) }
+nominal NominalDefinition { id: TypeId(7), name: "S", span: Span { file: FileId(0), start: 55, end: 56 }, module: Some(FileId(0)), public: false, parameters: [], kind: Struct([SemanticField { name: "number", span: Span { file: FileId(0), start: 59, end: 65 }, ty: Int, public: false }]) }
+generics TypeId(0) [GenericParameter { id: ParamId(0), name: "T0", bounds: [] }]
+generics TypeId(1) [GenericParameter { id: ParamId(1), name: "T0", bounds: [] }, GenericParameter { id: ParamId(2), name: "T1", bounds: [] }]
+generics TypeId(2) [GenericParameter { id: ParamId(3), name: "T0", bounds: [] }]
+generics TypeId(3) [GenericParameter { id: ParamId(4), name: "T0", bounds: [] }]
+generics TypeId(4) [GenericParameter { id: ParamId(5), name: "T0", bounds: [] }, GenericParameter { id: ParamId(6), name: "T1", bounds: [] }]
+generics TypeId(5) [GenericParameter { id: ParamId(7), name: "T0", bounds: [] }]
+generics TypeId(6) [GenericParameter { id: ParamId(8), name: "T", bounds: [] }]
+impl Implementation { span: Span { file: FileId(0), start: 74, end: 149 }, module: FileId(0), target: Nominal(TypeId(7), []), interface: Some(Nominal(TypeId(6), [Int])), methods: [(SymbolId(4), Some(SymbolId(3)))] }
+impl Implementation { span: Span { file: FileId(0), start: 150, end: 218 }, module: FileId(0), target: Nominal(TypeId(7), []), interface: None, methods: [(SymbolId(5), None)] }
+fn Function { id: SymbolId(0), module: FileId(0), name: "generic", span: Span { file: FileId(0), start: 222, end: 349 }, public: false, generics: [GenericParameter { id: ParamId(9), name: "T", bounds: [Nominal(TypeId(6), [Int])] }], parameters: [Parameter { local: SymbolId(6), ty: Param(ParamId(9)), default: None }], completion: Int, asynchronous: false, body: Zen(ExprId(7)) }
+fn Function { id: SymbolId(1), module: FileId(0), name: "identity", span: Span { file: FileId(0), start: 353, end: 397 }, public: false, generics: [GenericParameter { id: ParamId(10), name: "T", bounds: [] }], parameters: [Parameter { local: SymbolId(8), ty: Param(ParamId(10)), default: None }], completion: Param(ParamId(10)), asynchronous: false, body: Zen(ExprId(9)) }
+fn Function { id: SymbolId(2), module: FileId(0), name: "example", span: Span { file: FileId(0), start: 401, end: 685 }, public: false, generics: [], parameters: [], completion: Int, asynchronous: false, body: Zen(ExprId(30)) }
+fn Function { id: SymbolId(3), module: FileId(0), name: "convert", span: Span { file: FileId(0), start: 26, end: 33 }, public: false, generics: [GenericParameter { id: ParamId(8), name: "T", bounds: [] }], parameters: [Parameter { local: SymbolId(17), ty: Nominal(TypeId(6), [Param(ParamId(8))]), default: None }], completion: Param(ParamId(8)), asynchronous: false, body: Requirement }
+fn Function { id: SymbolId(4), module: FileId(0), name: "convert", span: Span { file: FileId(0), start: 103, end: 147 }, public: false, generics: [], parameters: [Parameter { local: SymbolId(14), ty: Nominal(TypeId(7), []), default: None }], completion: Int, asynchronous: false, body: Zen(ExprId(33)) }
+fn Function { id: SymbolId(5), module: FileId(0), name: "identity", span: Span { file: FileId(0), start: 166, end: 216 }, public: false, generics: [GenericParameter { id: ParamId(11), name: "T", bounds: [] }], parameters: [Parameter { local: SymbolId(15), ty: Nominal(TypeId(7), []), default: None }, Parameter { local: SymbolId(16), ty: Param(ParamId(11)), default: None }], completion: Param(ParamId(11)), asynchronous: false, body: Zen(ExprId(35)) }
+local Local { id: SymbolId(6), name: "value", span: Span { file: FileId(0), start: 247, end: 252 }, ty: Param(ParamId(9)), mutable: false }
+local Local { id: SymbolId(7), name: "method", span: Span { file: FileId(0), start: 274, end: 280 }, ty: Function([], Int), mutable: false }
+local Local { id: SymbolId(8), name: "value", span: Span { file: FileId(0), start: 365, end: 370 }, ty: Param(ParamId(10)), mutable: false }
+local Local { id: SymbolId(9), name: "value", span: Span { file: FileId(0), start: 428, end: 433 }, ty: Nominal(TypeId(7), []), mutable: false }
+local Local { id: SymbolId(10), name: "method", span: Span { file: FileId(0), start: 461, end: 467 }, ty: Function([Int], Int), mutable: false }
+local Local { id: SymbolId(11), name: "function", span: Span { file: FileId(0), start: 508, end: 516 }, ty: Function([Int], Int), mutable: false }
+local Local { id: SymbolId(12), name: "concrete", span: Span { file: FileId(0), start: 551, end: 559 }, ty: Int, mutable: false }
+local Local { id: SymbolId(13), name: "inherent", span: Span { file: FileId(0), start: 587, end: 595 }, ty: Int, mutable: false }
+local Local { id: SymbolId(14), name: "self", span: Span { file: FileId(0), start: 111, end: 115 }, ty: Nominal(TypeId(7), []), mutable: false }
+local Local { id: SymbolId(15), name: "self", span: Span { file: FileId(0), start: 178, end: 182 }, ty: Nominal(TypeId(7), []), mutable: false }
+local Local { id: SymbolId(16), name: "value", span: Span { file: FileId(0), start: 184, end: 189 }, ty: Param(ParamId(11)), mutable: false }
+local Local { id: SymbolId(17), name: "self", span: Span { file: FileId(0), start: 34, end: 38 }, ty: Nominal(TypeId(6), [Param(ParamId(8))]), mutable: false }
+expr #0 : Param(ParamId(9)) = Local(SymbolId(6)) @ Span { file: FileId(0), start: 294, end: 299 }
+expr #1 : Function([], Int) = Callable(Callable { target: Requirement { method: SymbolId(3), interface: Nominal(TypeId(6), [Int]), receiver: Param(ParamId(9)) }, type_arguments: [], receiver: Some(ExprId(0)) }) @ Span { file: FileId(0), start: 294, end: 307 }
+expr #2 : Param(ParamId(9)) = Local(SymbolId(6)) @ Span { file: FileId(0), start: 320, end: 325 }
+expr #3 : Int = Call { callee: Resolved(Callable { target: Requirement { method: SymbolId(3), interface: Nominal(TypeId(6), [Int]), receiver: Param(ParamId(9)) }, type_arguments: [], receiver: Some(ExprId(2)) }), arguments: [], defaults: [] } @ Span { file: FileId(0), start: 320, end: 335 }
+expr #4 : Function([], Int) = Local(SymbolId(7)) @ Span { file: FileId(0), start: 338, end: 344 }
+expr #5 : Int = Call { callee: Value(ExprId(4)), arguments: [], defaults: [] } @ Span { file: FileId(0), start: 338, end: 346 }
+expr #6 : Int = Binary { op: Add, operand_type: Int, left: ExprId(3), right: ExprId(5) } @ Span { file: FileId(0), start: 320, end: 346 }
+expr #7 : Never = Block { scope: BlockId(0), statements: [Stmt { span: Span { file: FileId(0), start: 270, end: 308 }, kind: Bind { local: SymbolId(7), value: ExprId(1) } }, Stmt { span: Span { file: FileId(0), start: 313, end: 347 }, kind: Return { target: Function(SymbolId(0)), value: Some(ExprId(6)) } }], tail: None } @ Span { file: FileId(0), start: 264, end: 349 }
+expr #8 : Param(ParamId(10)) = Local(SymbolId(8)) @ Span { file: FileId(0), start: 389, end: 394 }
+expr #9 : Never = Block { scope: BlockId(1), statements: [Stmt { span: Span { file: FileId(0), start: 382, end: 395 }, kind: Return { target: Function(SymbolId(1)), value: Some(ExprId(8)) } }], tail: None } @ Span { file: FileId(0), start: 380, end: 397 }
+expr #10 : Int = Literal(Integer { negative: false, magnitude: "2" }) @ Span { file: FileId(0), start: 448, end: 449 }
+expr #11 : Nominal(TypeId(7), []) = Struct { nominal: TypeId(7), fields: [(FieldId { owner: TypeId(7), index: 0 }, ExprId(10))] } @ Span { file: FileId(0), start: 436, end: 451 }
+expr #12 : Nominal(TypeId(7), []) = Local(SymbolId(9)) @ Span { file: FileId(0), start: 484, end: 489 }
+expr #13 : Function([Int], Int) = Callable(Callable { target: Inherent(SymbolId(5)), type_arguments: [(ParamId(11), Int)], receiver: Some(ExprId(12)) }) @ Span { file: FileId(0), start: 484, end: 498 }
+expr #14 : Function([Int], Int) = Callable(Callable { target: Function(SymbolId(1)), type_arguments: [(ParamId(10), Int)], receiver: None }) @ Span { file: FileId(0), start: 533, end: 541 }
+expr #15 : Nominal(TypeId(7), []) = Local(SymbolId(9)) @ Span { file: FileId(0), start: 562, end: 567 }
+expr #16 : Int = Call { callee: Resolved(Callable { target: Implementation { method: SymbolId(4), interface: Nominal(TypeId(6), [Int]), requirement: SymbolId(3) }, type_arguments: [], receiver: Some(ExprId(15)) }), arguments: [], defaults: [] } @ Span { file: FileId(0), start: 562, end: 577 }
+expr #17 : Nominal(TypeId(7), []) = Local(SymbolId(9)) @ Span { file: FileId(0), start: 598, end: 603 }
+expr #18 : Int = Literal(Integer { negative: false, magnitude: "1" }) @ Span { file: FileId(0), start: 613, end: 614 }
+expr #19 : Int = Call { callee: Resolved(Callable { target: Inherent(SymbolId(5)), type_arguments: [(ParamId(11), Int)], receiver: Some(ExprId(17)) }), arguments: [Argument { parameter: 1, value: ExprId(18) }], defaults: [] } @ Span { file: FileId(0), start: 598, end: 615 }
+expr #20 : Nominal(TypeId(7), []) = Local(SymbolId(9)) @ Span { file: FileId(0), start: 636, end: 641 }
+expr #21 : Int = Call { callee: Resolved(Callable { target: Function(SymbolId(0)), type_arguments: [(ParamId(9), Nominal(TypeId(7), []))], receiver: None }), arguments: [Argument { parameter: 0, value: ExprId(20) }], defaults: [] } @ Span { file: FileId(0), start: 628, end: 642 }
+expr #22 : Function([Int], Int) = Local(SymbolId(10)) @ Span { file: FileId(0), start: 645, end: 651 }
+expr #23 : Int = Local(SymbolId(12)) @ Span { file: FileId(0), start: 652, end: 660 }
+expr #24 : Int = Call { callee: Value(ExprId(22)), arguments: [Argument { parameter: 0, value: ExprId(23) }], defaults: [] } @ Span { file: FileId(0), start: 645, end: 661 }
+expr #25 : Int = Binary { op: Add, operand_type: Int, left: ExprId(21), right: ExprId(24) } @ Span { file: FileId(0), start: 628, end: 661 }
+expr #26 : Function([Int], Int) = Local(SymbolId(11)) @ Span { file: FileId(0), start: 664, end: 672 }
+expr #27 : Int = Local(SymbolId(13)) @ Span { file: FileId(0), start: 673, end: 681 }
+expr #28 : Int = Call { callee: Value(ExprId(26)), arguments: [Argument { parameter: 0, value: ExprId(27) }], defaults: [] } @ Span { file: FileId(0), start: 664, end: 682 }
+expr #29 : Int = Binary { op: Add, operand_type: Int, left: ExprId(25), right: ExprId(28) } @ Span { file: FileId(0), start: 628, end: 682 }
+expr #30 : Never = Block { scope: BlockId(2), statements: [Stmt { span: Span { file: FileId(0), start: 424, end: 452 }, kind: Bind { local: SymbolId(9), value: ExprId(11) } }, Stmt { span: Span { file: FileId(0), start: 457, end: 499 }, kind: Bind { local: SymbolId(10), value: ExprId(13) } }, Stmt { span: Span { file: FileId(0), start: 504, end: 542 }, kind: Bind { local: SymbolId(11), value: ExprId(14) } }, Stmt { span: Span { file: FileId(0), start: 547, end: 578 }, kind: Bind { local: SymbolId(12), value: ExprId(16) } }, Stmt { span: Span { file: FileId(0), start: 583, end: 616 }, kind: Bind { local: SymbolId(13), value: ExprId(19) } }, Stmt { span: Span { file: FileId(0), start: 621, end: 683 }, kind: Return { target: Function(SymbolId(2)), value: Some(ExprId(29)) } }], tail: None } @ Span { file: FileId(0), start: 418, end: 685 }
+expr #31 : Nominal(TypeId(7), []) = Local(SymbolId(14)) @ Span { file: FileId(0), start: 133, end: 137 }
+expr #32 : Int = Field { receiver: ExprId(31), field: FieldId { owner: TypeId(7), index: 0 } } @ Span { file: FileId(0), start: 133, end: 144 }
+expr #33 : Never = Block { scope: BlockId(3), statements: [Stmt { span: Span { file: FileId(0), start: 126, end: 145 }, kind: Return { target: Function(SymbolId(4)), value: Some(ExprId(32)) } }], tail: None } @ Span { file: FileId(0), start: 124, end: 147 }
+expr #34 : Param(ParamId(11)) = Local(SymbolId(16)) @ Span { file: FileId(0), start: 208, end: 213 }
+expr #35 : Never = Block { scope: BlockId(4), statements: [Stmt { span: Span { file: FileId(0), start: 201, end: 214 }, kind: Return { target: Function(SymbolId(5)), value: Some(ExprId(34)) } }], tail: None } @ Span { file: FileId(0), start: 199, end: 216 }

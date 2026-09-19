@@ -1,0 +1,27 @@
+native fn close() -> Unit;
+native async fn load() -> Result<Int, String>;
+async fn example(items: List<Int>) -> Result<Int, String> {
+    defer close();
+    var total = 0;
+    for item in items {
+        while item > total {
+            total = total + 1;
+            if total == 2 { continue; }
+            break;
+        }
+        if item == 0 { continue; }
+        break;
+    }
+    let value = await load()?;
+    return .ok(if total > value { total } else { value });
+}
+fn option(value: Option<Int>) -> Option<Int> {
+    let n = value?;
+    return Option<Int>.some(n);
+}
+fn matched(value: Result<Int, String>) -> Int {
+    return match value {
+        .ok(number) => number;
+        .err(_) => 0;
+    };
+}

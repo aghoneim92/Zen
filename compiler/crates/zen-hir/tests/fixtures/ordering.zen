@@ -1,0 +1,12 @@
+struct Pair { first: Int; second: Int; }
+native fn one() -> Int;
+native fn two() -> Int;
+fn combine(first: Int, second: Int, third: Int = first + second) -> Int {
+    return first + second + third;
+}
+fn example() -> Int {
+    let pair = Pair { second: two(), first: one() };
+    let updated = pair with { second: one(), first: two() };
+    let list = [two(), one()];
+    return combine(second: two(), first: updated.first);
+}

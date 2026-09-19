@@ -6,7 +6,7 @@ This file applies to the entire repository. Keep it accurate as the project evol
 
 Zen is a statically typed language and planned cross-platform application platform
 focused on predictable semantics and reliable generated code. The repository
-currently implements an early compiler frontend, a canonical formatter, a language
+currently implements a compiler frontend and typed HIR, a canonical formatter, a language
 server, and Zed integration. It does not yet generate or execute programs. Do not
 describe planned runtime, platform, or standard-library features as implemented.
 
@@ -25,8 +25,8 @@ Tokio and tower-lsp-server. Preserve the lightweight core dependency boundary.
   Read later entries for decisions that supersede earlier milestone limitations.
 - [Canonical formatting](docs/formatting.md): style, formatter invariants, CLI and
   editor behavior, and regression-test conventions.
-- [Typed HIR](docs/hir.md): representation contract and boundaries for lowering
-  work currently under development.
+- [Typed HIR](docs/hir.md): representation contract, lowering API, semantic identities,
+  golden tests, and boundaries for future compiler stages.
 - [Zed integration](editors/zed/README.md): installation, capabilities, architecture,
   validation, and troubleshooting.
 - [Tree-sitter grammar](tooling/tree-sitter-zen/README.md): syntax tooling and checks.
@@ -43,7 +43,7 @@ follow-up in the implementation notes using their existing format.
 | `compiler/crates/zen-diagnostics/` | Source maps, spans, diagnostic codes, structured diagnostics, and rendering. |
 | `compiler/crates/zen-syntax/` | Lexer, parser, AST, recovery, trivia, and syntax-role metadata. |
 | `compiler/crates/zen-semantics/` | Resolution, nominal types, type checking, and shared IDE analysis. `src/checker/` divides checking by concern. |
-| `compiler/crates/zen-hir/` | Typed, resolved high-level IR and lowering work in progress for future backends. |
+| `compiler/crates/zen-hir/` | Owned typed/resolved high-level IR, lowering, deterministic dumps, and fixture tests for future backends. |
 | `compiler/crates/zen-format/` | Canonical formatting over compiler syntax, document rendering, and formatter fixtures/property tests. |
 | `compiler/crates/zen-lsp/` | LSP transport, workspace snapshots, position conversion, and editor features backed by compiler analysis. |
 | `compiler/crates/zen-cli/` | The `zen` binary: `check`, `fmt`, and `lsp`, plus CLI/LSP integration tests. |
@@ -123,6 +123,12 @@ Use the Zed guide for manual editor checks when integration behavior changes.
 For documentation-only work, verify facts, commands, and relative links; compiler
 tests are unnecessary unless behavior also changes. Report what was actually
 validated and any checks that could not run.
+
+HIR cases use `.zen` / `.hir` pairs in `compiler/crates/zen-hir/tests/fixtures`.
+Update deliberately with `ZEN_UPDATE_HIR=1 cargo test -p zen-hir --test lowering
+golden_dumps` and inspect the snapshots. Lowering consumes error-free semantic
+data; keep resolution decisions in `zen-semantics`, and runtime/layout choices
+out of HIR.
 
 ## Keep documentation current as you work
 

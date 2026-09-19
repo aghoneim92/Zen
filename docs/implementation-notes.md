@@ -1,7 +1,8 @@
 # Frontend implementation notes
 
-The original language documents are unchanged. This is a checker milestone,
-not a complete standard library, native binding validator, or runtime.
+The original language documents are unchanged. The compiler now includes typed
+HIR after the frontend (see the later HIR entries), but not a complete standard
+library, native binding validator, or runtime.
 
 ## 2026-09-18 — Grammar precedence and statement blocks
 
@@ -110,7 +111,8 @@ accepted unsafe program. Limits protect the frontend from stack exhaustion.
 `zen_syntax::parse` returns an AST and structured diagnostics. Callers should stop
 before semantic checking if syntax errors exist. `zen_semantics::check` returns
 source AST modules, a nominal-definition table, symbols, and typed expressions
-keyed by `(FileId, ExprId)`, as well as diagnostics. `Type::Error` is recovery-only;
+keyed by `(FileId, ExprId)`, retained resolution decisions for HIR lowering,
+as well as diagnostics. `Type::Error` is recovery-only;
 semantic output is usable for later lowering only when no errors remain. Symbol
 and nominal IDs are stable within one checked program, not persisted across runs.
 
@@ -173,3 +175,47 @@ are sufficient; a separate lossless parser and Tree-sitter dependency are unnece
 **Needs spec update:** yes — reconcile older examples with the precise match-arm
 and await grammar, as recorded above. No new language ambiguity was resolved by
 changing semantics in this milestone.
+
+## 2026-09-19 — Typed HIR and retained semantic decisions
+
+**Spec issue:** The frontend previously retained types and IDE references but
+not all substitutions, parameter mappings or member identities needed by later
+compiler stages. `TypeId` denotes nominal declarations, not arbitrary interned
+types. Default evaluation timing remains unspecified beyond deterministic,
+declaration-context expressions and references to earlier parameters.
+
+**Implementation choice:** Add `zen-semantics::resolved` checker facts and the
+owned `zen-hir` lowering API. Reuse canonical `Type`, `SymbolId` and nominal IDs;
+introduce owner/index field and variant IDs. Retain structured control flow,
+interface requirements versus concrete implementations, generic substitutions,
+explicit captures, async completion types, and classified propagation. Omitted
+defaults reference their declaration parameter; they are not materialized at call
+sites. Iteration retains the existing List/Set contract. This supersedes the
+frontend-only pipeline description; there is still no execution or backend.
+See [typed HIR](hir.md) for the contract, API, tests and deferred work.
+
+**Reasoning:** Downstream consumers need resolved meaning without repeating the
+checker or committing to runtime layout/control-flow choices. Retaining defaults
+separately avoids imposing an unstated evaluation rule.
+
+**Needs spec update:** yes — settle default evaluation timing before execution.
+No accepted source syntax or checking rules were changed by this milestone.
+
+## 2026-09-19 — Divergent operands at the HIR boundary
+
+**Spec issue:** The checker accepts `await` and `?` on `Never`, even though no
+Task/Option/Result value can be produced. It also accepts a `Never` callee without
+checking its unreachable argument syntax, unlike its usual policy of checking
+unreachable code.
+
+**Implementation choice:** HIR records a typed `Diverge` operation that evaluates
+the checked operand and cannot proceed. For a Never callee the argument syntax
+has no checked semantic value and is not carried into HIR. Other checked
+unreachable code remains present. Existing frontend acceptance is unchanged.
+
+**Reasoning:** There is no callable, propagation kind or task completion type to
+invent when evaluation cannot reach the operation. Backend execution must not
+attempt invocation or evaluate arguments after the callee diverges.
+
+**Needs spec update:** yes — decide whether such calls should instead diagnose
+unreachable argument syntax in a future checker change.

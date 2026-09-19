@@ -833,6 +833,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "zen-hir"
+version = "0.1.0"
+dependencies = [
+ "zen-diagnostics",
+ "zen-semantics",
+ "zen-syntax",
+]
+
+[[package]]
 name = "zen-lsp"
 version = "0.1.0"
 dependencies = [

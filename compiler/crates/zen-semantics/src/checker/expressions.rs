@@ -125,7 +125,7 @@ impl Checker {
                 if let Some(id) = self.value_id(&n.text) {
                     let t = if let Some(f) = self.functions.get(&id).cloned() {
                         if !f.generics.is_empty() {
-                            self.instantiate_function_value(&f, args, expected, e.span)
+                            self.instantiate_function_value(&f, args, expected, e.span, None)
                         } else {
                             if !args.is_empty() {
                                 self.error(
@@ -195,7 +195,7 @@ impl Checker {
                             "instance method must explicitly declare self",
                         );
                     }
-                    let ty = self.instantiate_function_value(&f, types, expected, e.span);
+                    let ty = self.instantiate_function_value(&f, types, expected, e.span, Some(&t));
                     self.record(e, ty.clone(), Some(f.symbol));
                     ty
                 } else {

@@ -43,6 +43,7 @@ impl Checker {
         }
     }
     pub(super) fn pattern(&mut self, p: &Pattern, ty: &Type) {
+        self.resolved.patterns.insert(key(p.span), ty.clone());
         match &p.kind {
             PatternKind::Wildcard => {}
             PatternKind::Bind(n) => self.bind(n, ty.clone(), false),
@@ -80,6 +81,13 @@ impl Checker {
                     self.error("ZEN-MATCH-0002", n.span, "unknown variant in pattern");
                     return;
                 };
+                self.resolved.variants.insert(
+                    key(n.span),
+                    resolved::VariantId {
+                        owner: *id,
+                        index: variants.iter().position(|(v, _)| v.text == n.text).unwrap(),
+                    },
+                );
                 self.ide
                     .reference(n.span, Entity::Member(*id, n.text.clone()));
                 if payload.len() != children.len() {

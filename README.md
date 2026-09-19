@@ -2,9 +2,9 @@
 
 Zen is a statically typed language and planned cross-platform application platform
 focused on predictable semantics and reliable generated code. The repository
-currently provides an early compiler frontend, a canonical formatter, a language
-server, and Zed integration. A typed high-level intermediate representation (HIR)
-is under development. Zen does not yet generate or execute programs.
+currently provides a compiler frontend, typed high-level intermediate
+representation (HIR), a canonical formatter, a language server, and Zed
+integration. Zen does not yet generate or execute programs.
 
 ## Getting started
 
@@ -66,7 +66,7 @@ library; the LSP uses tower-lsp-server and Tokio.
 | `compiler/crates/zen-diagnostics/` | Source maps, spans, and structured diagnostics. |
 | `compiler/crates/zen-syntax/` | Lexer, parser, AST, recovery, and syntax metadata. |
 | `compiler/crates/zen-semantics/` | Resolution, type checking, and shared IDE analysis. |
-| `compiler/crates/zen-hir/` | Typed, resolved HIR and lowering work in progress; see the [HIR contract](docs/hir.md). |
+| `compiler/crates/zen-hir/` | Owned typed/resolved HIR, lowering, and deterministic dumps; see the [HIR contract](docs/hir.md). |
 | `compiler/crates/zen-format/` | Canonical formatter and its regression fixtures. |
 | `compiler/crates/zen-lsp/` | Language server, workspace snapshots, and editor features. |
 | `compiler/crates/zen-cli/` | The `zen` command and CLI/LSP integration tests. |
@@ -76,7 +76,9 @@ library; the LSP uses tower-lsp-server and Tokio.
 | `examples/editor/` | Cross-file example program for editor testing. |
 | `docs/` | Language design, implementation decisions, and feature guides. |
 
-HIR is intended to preserve typed, resolved program structure for future backends.
+`zen_hir::lower_program` converts successfully checked programs into owned, typed,
+resolved HIR for future backends. It preserves source order, semantic identities,
+resolved calls, generic substitutions, and explicit closure captures.
 Code generation, execution, runtime/native ABI support, and the application platform
 remain future work; draft specifications describe more than is implemented today.
 

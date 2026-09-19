@@ -195,6 +195,17 @@ impl Checker {
             return;
         }
         let symbol = self.new_symbol(n, ty.clone());
+        self.resolved.bindings.insert(key(n.span), symbol);
+        self.resolved.locals.insert(
+            symbol,
+            resolved::Local {
+                id: symbol,
+                name: n.text.clone(),
+                span: n.span,
+                ty: ty.clone(),
+                mutable,
+            },
+        );
         let local = Local {
             ty,
             mutable,

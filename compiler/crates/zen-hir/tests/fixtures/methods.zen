@@ -1,0 +1,19 @@
+interface Convert<T> { fn convert(self) -> T; }
+struct S { number: Int; }
+impl Convert<Int> for S { fn convert(self) -> Int { return self.number; } }
+impl S {
+    fn identity<T>(self, value: T) -> T { return value; }
+}
+fn generic<T: Convert<Int>>(value: T) -> Int {
+    let method: () -> Int = value.convert;
+    return value.convert() + method();
+}
+fn identity<T>(value: T) -> T { return value; }
+fn example() -> Int {
+    let value = S { number: 2 };
+    let method: (Int) -> Int = value.identity;
+    let function: (Int) -> Int = identity;
+    let concrete = value.convert();
+    let inherent = value.identity(1);
+    return generic(value) + method(concrete) + function(inherent);
+}

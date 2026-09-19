@@ -1,0 +1,9 @@
+fn example(value: Int) -> () -> () -> Int {
+    let outer = () -> () -> Int {
+        let inside = 2;
+        return () -> Int { return value + inside; };
+    };
+    return outer;
+}
+fn another(value: Int) -> Int { return value; }
+fn indirect(f: (Int) -> Int) -> Int { return f(3); }

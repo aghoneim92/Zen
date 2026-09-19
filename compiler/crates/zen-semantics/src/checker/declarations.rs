@@ -432,6 +432,8 @@ impl Checker {
             result,
             asynchronous: f.asynchronous,
             body: f.body.clone(),
+            native: f.native,
+            intrinsic: None,
         };
         self.symbols[symbol.0].ty = sig.ty();
         sig

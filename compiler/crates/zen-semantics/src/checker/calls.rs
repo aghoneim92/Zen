@@ -35,6 +35,13 @@ impl Checker {
             self.error("ZEN-NAME-0008", n.span, "unknown enum variant");
             return Type::Error;
         };
+        self.resolved.variants.insert(
+            key(n.span),
+            resolved::VariantId {
+                owner: *id,
+                index: variants.iter().position(|(v, _)| v.text == n.text).unwrap(),
+            },
+        );
         self.ide
             .reference(n.span, Entity::Member(*id, definition.text.clone()));
         if args.len() != payload.len() {
@@ -154,6 +161,13 @@ impl Checker {
                 if !f.public && module != self.ctx.module {
                     self.error("ZEN-NAME-0005", n.span, "struct field is private");
                 }
+                self.resolved.fields.insert(
+                    key(n.span),
+                    resolved::FieldId {
+                        owner: *id,
+                        index: fields.iter().position(|f| f.name.text == n.text).unwrap(),
+                    },
+                );
                 self.ide
                     .reference(n.span, Entity::Member(*id, f.name.text.clone()));
                 self.expr(e, Some(&f.ty.substitute(&sub)));
@@ -183,9 +197,13 @@ impl Checker {
             && let Definition::Struct(fields) = &self.nominals[id.0].kind
             && let Some(f) = fields.iter().find(|f| f.name.text == n.text).cloned()
         {
+            let index = fields.iter().position(|f| f.name.text == n.text).unwrap();
             if !f.public && self.nominals[id.0].module != self.ctx.module {
                 self.error("ZEN-NAME-0005", n.span, "field is private");
             }
+            self.resolved
+                .fields
+                .insert(key(n.span), resolved::FieldId { owner: *id, index });
             self.ide
                 .reference(n.span, Entity::Member(*id, f.name.text.clone()));
             return Some(f.ty.substitute(&self.substitution(*id, args)));
@@ -196,11 +214,24 @@ impl Checker {
         let Type::Nominal(id, args) = receiver else {
             return None;
         };
-        let (parameters, result) = match (*id, name.text.as_str()) {
-            (LIST, "get") => (vec![("index", Type::Int)], option(args[0].clone())),
-            (LIST, "first") => (vec![], option(args[0].clone())),
-            (LIST, "append") => (vec![("value", args[0].clone())], receiver.clone()),
-            (MAP, "get") => (vec![("key", args[0].clone())], option(args[1].clone())),
+        use resolved::Intrinsic;
+        let (intrinsic, parameters, result) = match (*id, name.text.as_str()) {
+            (LIST, "get") => (
+                Intrinsic::ListGet,
+                vec![("index", Type::Int)],
+                option(args[0].clone()),
+            ),
+            (LIST, "first") => (Intrinsic::ListFirst, vec![], option(args[0].clone())),
+            (LIST, "append") => (
+                Intrinsic::ListAppend,
+                vec![("value", args[0].clone())],
+                receiver.clone(),
+            ),
+            (MAP, "get") => (
+                Intrinsic::MapGet,
+                vec![("key", args[0].clone())],
+                option(args[1].clone()),
+            ),
             _ => return None,
         };
         let mut params = vec![(
@@ -241,6 +272,8 @@ impl Checker {
             result,
             asynchronous: false,
             body: None,
+            native: false,
+            intrinsic: Some(intrinsic),
         })
     }
     pub(super) fn method(&mut self, t: &Type, n: &Name) -> Option<Signature> {
@@ -485,6 +518,7 @@ impl Checker {
         args: &[TypeRef],
         expected: Option<&Type>,
         span: Span,
+        receiver: Option<&Type>,
     ) -> Type {
         let ids = f.generics.iter().map(|g| g.id).collect::<Vec<_>>();
         let mut sub = BTreeMap::new();
@@ -504,6 +538,13 @@ impl Checker {
             self.infer(&f.ty(), t, &ids, &mut sub, span);
         }
         self.finish_inference(f, &ids, &sub, span);
+        self.resolved.callables.insert(
+            key(span),
+            resolved::Callable {
+                target: self.call_target(f, receiver),
+                type_arguments: sub.iter().map(|(id, ty)| (*id, ty.clone())).collect(),
+            },
+        );
         f.ty().substitute(&sub)
     }
     pub(super) fn finish_inference(
@@ -605,6 +646,7 @@ impl Checker {
         }
         let mut used = BTreeSet::new();
         let mut checked = vec![];
+        let mut argument_indices = vec![];
         for (i, a) in args.iter().enumerate() {
             let index = if let Some(label) = &a.label {
                 let index = params.iter().position(|(n, _, _)| n.text == label.text);
@@ -622,6 +664,7 @@ impl Checker {
                 None
             };
             if let Some(index) = index {
+                argument_indices.push(index + skip);
                 if let Some(label) = &a.label {
                     self.ide
                         .pending_references
@@ -670,6 +713,28 @@ impl Checker {
         let callable = Type::Function(
             params.iter().map(|(_, t, _)| t.substitute(&sub)).collect(),
             Box::new(result.clone()),
+        );
+        self.resolved.calls.insert(
+            key(span),
+            resolved::Call {
+                callable: resolved::Callable {
+                    target: self.call_target(
+                        f,
+                        if bound {
+                            f.params.first().map(|p| &p.1)
+                        } else {
+                            None
+                        },
+                    ),
+                    type_arguments: sub.into_iter().collect(),
+                },
+                arguments: argument_indices,
+                defaults: (0..params.len())
+                    .filter(|i| !used.contains(i))
+                    .map(|i| i + skip)
+                    .collect(),
+                bound,
+            },
         );
         self.record(callee, callable, Some(f.symbol));
         result
